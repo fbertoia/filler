@@ -1,5 +1,5 @@
-SRC_NAME = main.c
-
+SRC_NAME = main.c \
+			parse.c
 
 OBJ_PATH = ./obj/
 
