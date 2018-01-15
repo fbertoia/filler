@@ -24,7 +24,9 @@ int main(int ac, char **av)
 		}
 		else if (state == state_board)
 		{
-			printf("%d\n", parse_board_line(s, &data));
+			parse_board(s, &data);
+			state = state_piece;
 		}
+		free(s);
 	}
 }
