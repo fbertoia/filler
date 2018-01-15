@@ -9,7 +9,7 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include <stdio.h>
-# define BUFF_SIZE 13
+# define BUFF_SIZE 1
 # define READ_LINE 1
 # define READ_ERROR -1
 # define READ_OVER 0

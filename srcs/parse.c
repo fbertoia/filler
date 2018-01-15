@@ -1,6 +1,6 @@
 #include <filler.h>
 
-int	parse_first_line(char *line, char *av)
+int				parse_first_line(char *line, char *av)
 {
 	if (!ft_strnequ("$$$ exec p", line, 10))
 		return (-1);
@@ -15,7 +15,18 @@ int	parse_first_line(char *line, char *av)
 	return (line[10] - '0');
 }
 
-int parse_board_line(char *line, t_d *data)
+int				cmp(char *line, int *i, char c)
+{
+	while (line[*i] && line[*i] != c)
+	{
+		if (!ft_isdigit(line[*i]))
+			return (0);
+		(*i)++;
+	}
+	return (1);
+}
+
+static int		parse_board_line(char *line, t_d *data)
 {
 	int		size_x;
 	int		size_y;
@@ -25,33 +36,180 @@ int parse_board_line(char *line, t_d *data)
 		return (-1);
 	size_x = ft_atoi(line + 8);
 	i = 8;
-	while (line[i] && line[i] != ' ')
-	{
-		if (!ft_isdigit(line[i]))
-			return (-2);
-		i++;
-	}
+	if (!cmp(line, &i, ' '))
+		return (-2);
 	i++;
 	size_y = ft_atoi(line + i);
-	while (line[i] && line[i] != ':')
-	{
-		if (!ft_isdigit(line[i]))
-			return (-3);
-		i++;
-	}
+	if (!cmp(line, &i, ':'))
+		return (-3);
 	if (line[i] != ':' || line[i + 1] != '\0')
 		return (-4);
-	if (size_x <= 0 || size_y <= 0 ||
-		((data->size_x != -1 || data->size_y != -1) && (data->size_x != size_x || data->size_y != size_y)))
-		{
-			return (-5);
-		}
+	if (size_x <= 0 || size_y <= 0 || ((data->size_x != -1 ||
+		data->size_y != -1) && (data->size_x != size_x
+			|| data->size_y != size_y)))
+		return (-5);
 	data->size_x = size_x;
 	data->size_y = size_y;
 	return (1);
 }
 
-/*
-$$$ exec p1 : [./jcamhi.filler]
-Plateau 15 17:
-*/
+static int		parse_board_second_line(char *line, t_d *data)
+{
+	char	c;
+	int		i;
+
+	i = 0;
+	c = '0';
+	if (!ft_strnequ(line, "    ", 4))
+		return (-1);
+	line += 4;
+	while (*line == c)
+	{
+		c++;
+		if (c > '9')
+			c = '0';
+		line++;
+		i++;
+	}
+	if (*line)
+		return (-2);
+	if (i != data->size_y)
+		return (-3);
+	return (1);
+}
+
+int				ft_create_board(t_d *data)
+{
+	int	i;
+
+	i = 0;
+	if (data->board)
+		return (1);
+	else
+	{
+		if (!(data->board = (char**)malloc(sizeof(char*)
+			* (data->size_x + 1))))
+			return (0);
+		while (i < data->size_y)
+		{
+			if (!((data->board)[i] = (char*)malloc(sizeof(char)
+				* (data->size_y + 1))))
+				return (0);
+			i++;
+		}
+	}
+	return (1);
+}
+
+int				ft_fill_board(t_d *data, char *tmp, int i)
+{
+	int j;
+
+	j = 0;
+	while (j < data->size_y && *tmp)
+	{
+		if (*tmp != '.' && *tmp != 'o' && *tmp != 'O'
+				&& *tmp != 'x' && *tmp != 'X')
+			return (0);
+		(data->board)[i][j] = *tmp;
+		j++;
+		tmp++;
+	}
+	(data->board)[i][j] = '\0';
+	if (j != data->size_y || *tmp)
+		return (0);
+	return (1);
+}
+
+static int		parse_board_other(t_d *data)
+{
+	char	*line;
+	int		i;
+	char	*tmp;
+	int		k;
+
+	i = 0;
+	line = NULL;
+	while (i < data->size_x && (k = get_next_line(0, &line)) > 0)
+	{
+		if (ft_atoi(line) != i)
+			return (-1);
+		if ((tmp = ft_strchr(line, ' ')) == NULL)
+			return (-2);
+		tmp++;
+		if (!ft_fill_board(data, tmp, i))
+			return (-3);
+		i++;
+		ft_memdel((void**)&line);
+	}
+	data->board[i] = NULL;
+	if (k <= 0 && *tmp)
+		return (-4);
+	return (1);
+}
+
+static int		pieces_ok(char **board)
+{
+	void	*o;
+	void	*x;
+	int		i;
+
+	o = NULL;
+	x = NULL;
+	i = 0;
+	while (board[i])
+	{
+		if (!o)
+			o = ft_strchr(board[i], 'O');
+		if (!x)
+			x = ft_strchr(board[i], 'X');
+		i++;
+	}
+	if (!o || !x)
+		return (0);
+	return (1);
+}
+
+int				parse_2(t_d *data)
+{
+	if (parse_board_other(data) < 0)
+	{
+		printf("Error: Board line error.\n");
+		return (-5);
+	}
+	if (!pieces_ok(data->board))
+	{
+		printf("Error: No pieces on board.\n");
+		return (-6);
+	}
+	return (1);
+}
+
+int				parse_board(char *line, t_d *data)
+{
+	char	*l2;
+	int		i;
+
+	i = 0;
+	l2 = NULL;
+	printf("line : [%s]\n", line);
+	if ((i = parse_board_line(line, data)) < 0)
+	{
+		printf("Error: First board line not ok. - %d\n", i);
+		return (-1);
+	}
+	if (!ft_create_board(data))
+		return (-2);
+	if (get_next_line(0, &l2) <= 0)
+		return (-3);
+	if (parse_board_second_line(l2, data) < 0)
+	{
+		printf("Error: Second board line not ok.\n");
+		ft_memdel((void**)&l2);
+		return (-4);
+	}
+	ft_memdel((void**)&l2);
+	parse_2(data);
+	print_map(data->board);
+	return (1);
+}

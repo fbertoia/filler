@@ -8,8 +8,12 @@ int main(int ac, char **av)
 	int		state;
 
 	data.size_x = -1;
+	data.piece_x = -1;
 	data.size_y = -1;
-	state = state_board;
+	data.piece_y = -1;
+	data.board = NULL;
+	data.piece = NULL;
+	state = state_first_line;
 	while ((get_next_line(0, &s)) > 0)
 	{
 		if (state == state_first_line)
@@ -18,15 +22,23 @@ int main(int ac, char **av)
 			if (data.player_number < 0)
 			{
 				ft_putstr_fd("Parsing error : Invalid first line\n", 2);
-				return (0);
+				return (1);
 			}
 			state = state_board;
 		}
 		else if (state == state_board)
 		{
-			parse_board(s, &data);
+			if (parse_board(s, &data) <= 0)
+				return (1);
 			state = state_piece;
+		}
+		else if (state == state_piece)
+		{
+			if (parse_piece(s, &data) <= 0)
+				return (1);
+			state = state_board;
 		}
 		free(s);
 	}
+	return (0);
 }
