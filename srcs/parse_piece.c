@@ -53,7 +53,6 @@ int				ft_fill_piece(t_d *data, char *tmp, int i)
 	int j;
 
 	j = 0;
-	printf("tmp : [%s]\n", tmp);
 	while (j < data->piece_y && *tmp)
 	{
 		if (*tmp != '.' && *tmp != '*')
@@ -68,7 +67,6 @@ int				ft_fill_piece(t_d *data, char *tmp, int i)
 	(data->piece)[i][j] = '\0';
 	if (j != data->piece_y || *tmp)
 	{
-		printf("here !\n");
 		return (0);
 	}
 	return (1);
@@ -84,7 +82,6 @@ static int		parse_piece_other(t_d *data)
 	line = NULL;
 	while (i < data->piece_x && (k = get_next_line(0, &line)) > 0)
 	{
-		printf("after gnl : [%s]\n", line);
 		if (!ft_fill_piece(data, line, i))
 			return (-3);
 		i++;
@@ -101,7 +98,6 @@ int					parse_piece(char *line, t_d *data)
 	int		i;
 
 	i = 0;
-	printf("first line : [%s]\n", line);
 	if (parse_piece_line(line, data) < 0)
 	{
 		printf("Error: First piece line not ok.\n");

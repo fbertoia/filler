@@ -192,7 +192,6 @@ int				parse_board(char *line, t_d *data)
 
 	i = 0;
 	l2 = NULL;
-	printf("line : [%s]\n", line);
 	if ((i = parse_board_line(line, data)) < 0)
 	{
 		printf("Error: First board line not ok. - %d\n", i);

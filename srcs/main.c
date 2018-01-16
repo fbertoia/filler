@@ -40,5 +40,6 @@ int main(int ac, char **av)
 		}
 		free(s);
 	}
+	delboard(&data);
 	return (0);
 }
