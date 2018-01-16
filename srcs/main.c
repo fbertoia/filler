@@ -13,7 +13,9 @@ int main(int ac, char **av)
 	data.piece_y = -1;
 	data.board = NULL;
 	data.piece = NULL;
+	data.first_round = 1;
 	data.av = av[0];
+	data.points = NULL;
 	state = state_first_line;
 	while ((get_next_line(0, &s)) > 0)
 	{
@@ -24,6 +26,20 @@ int main(int ac, char **av)
 			{
 				ft_putstr_fd("Parsing error : Invalid first line\n", 2);
 				return (1);
+			}
+			if (data.player_number == 1)
+			{
+				data.us_min = 'o';
+				data.us_max = 'O';
+				data.other_min = 'x';
+				data.other_max = 'X';
+			}
+			else
+			{
+				data.us_min = 'x';
+				data.us_max = 'X';
+				data.other_min = 'o';
+				data.other_max = 'O';
 			}
 			state = state_board;
 		}
@@ -36,6 +52,8 @@ int main(int ac, char **av)
 		else if (state == state_piece)
 		{
 			if (parse_piece(s, &data) <= 0)
+				return (1);
+			if (!put_piece(&data))
 				return (1);
 			state = state_board;
 		}

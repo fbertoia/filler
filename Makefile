@@ -2,7 +2,8 @@ SRC_NAME = main.c \
 			parse.c \
 			debug.c \
 			parse_piece.c \
-			delboard.c
+			delboard.c \
+			put_piece.c
 
 OBJ_PATH = ./obj/
 
