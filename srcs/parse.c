@@ -90,7 +90,7 @@ int				ft_create_board(t_d *data)
 		if (!(data->board = (char**)malloc(sizeof(char*)
 			* (data->size_x + 1))))
 			return (0);
-		while (i < data->size_y)
+		while (i < data->size_x)
 		{
 			if (!((data->board)[i] = (char*)malloc(sizeof(char)
 				* (data->size_y + 1))))

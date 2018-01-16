@@ -37,7 +37,7 @@ int				ft_create_piece(t_d *data)
 		if (!(data->piece = (char**)malloc(sizeof(char*)
 			* (data->piece_x + 1))))
 			return (0);
-		while (i < data->piece_y)
+		while (i < data->piece_x)
 		{
 			if (!((data->piece)[i] = (char*)malloc(sizeof(char)
 				* (data->piece_y + 1))))
