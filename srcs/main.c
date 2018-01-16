@@ -13,6 +13,7 @@ int main(int ac, char **av)
 	data.piece_y = -1;
 	data.board = NULL;
 	data.piece = NULL;
+	data.av = av[0];
 	state = state_first_line;
 	while ((get_next_line(0, &s)) > 0)
 	{
@@ -38,7 +39,7 @@ int main(int ac, char **av)
 				return (1);
 			state = state_board;
 		}
-		free(s);
+		ft_memdel((void**)&s);
 	}
 	delboard(&data);
 	return (0);

@@ -143,7 +143,7 @@ static int		parse_board_other(t_d *data)
 		ft_memdel((void**)&line);
 	}
 	data->board[i] = NULL;
-	if (k <= 0 && *tmp)
+	if (i != data->size_x)
 		return (-4);
 	return (1);
 }
@@ -198,7 +198,10 @@ int				parse_board(char *line, t_d *data)
 		return (-1);
 	}
 	if (!ft_create_board(data))
+	{
+		perror(data->av);
 		return (-2);
+	}
 	if (get_next_line(0, &l2) <= 0)
 		return (-3);
 	if (parse_board_second_line(l2, data) < 0)
@@ -208,7 +211,8 @@ int				parse_board(char *line, t_d *data)
 		return (-4);
 	}
 	ft_memdel((void**)&l2);
-	parse_2(data);
+	if (parse_2(data) < 0)
+		return (-5);
 	print_map(data->board);
 	return (1);
 }

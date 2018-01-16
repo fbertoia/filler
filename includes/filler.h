@@ -19,6 +19,7 @@ typedef struct	s_d
 	int		piece_y;
 	char	**board;
 	char	**piece;
+	char	*av;
 }				t_d;
 
 int		parse_first_line(char *line, char *av);

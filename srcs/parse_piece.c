@@ -88,7 +88,7 @@ static int		parse_piece_other(t_d *data)
 		ft_memdel((void**)&line);
 	}
 	data->piece[i] = NULL;
-	if (k <= 0 && *line)
+	if (i != data->piece_x)
 		return (-4);
 	return (1);
 }
@@ -104,7 +104,10 @@ int					parse_piece(char *line, t_d *data)
 		return (-1);
 	}
 	if (!ft_create_piece(data))
+	{
+		perror(data->av);
 		return (-2);
+	}
 	if ((i = parse_piece_other(data)) < 0)
 	{
 		printf("Error: Second piece line not ok. - %d. y = %d and x = %d\n", i, data->piece_y, data->piece_x);
