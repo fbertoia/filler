@@ -56,12 +56,17 @@ int main(int ac, char **av)
 		{
 			if (parse_piece(s, &data) <= 0)
 				return (1);
+			print_map(data.board);
+			print_piece(data.piece);
 			if (!put_piece(&data))
 				return (1);
 			state = state_board;
+			data.piece_x = -1;
+			data.piece_y = -1;
+			delboard(&data);
+			data.piece = NULL;
 		}
 		ft_memdel((void**)&s);
 	}
-	delboard(&data);
 	return (0);
 }
