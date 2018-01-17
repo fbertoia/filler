@@ -4,7 +4,8 @@ SRC_NAME = main.c \
 			parse_piece.c \
 			delboard.c \
 			put_piece.c \
-			sort.c
+			sort.c \
+			list.cw
 
 OBJ_PATH = ./obj/
 
@@ -15,7 +16,7 @@ SRC_PATH = ./srcs/
 NAME = jcamhi.filler
 
 CC = gcc
-CFLAGS =  -Wextra -Wall -g
+CFLAGS =  -Wextra -Wall -g -fsanitize=address
 LFLAGS = -lft
 LIB_DIR=./lib/
 
