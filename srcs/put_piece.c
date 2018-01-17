@@ -31,47 +31,66 @@ int	is_possible_and_distance(t_d *data, int x, int y)
 	i = 0;
 	flag = 0;
 	min = -1;
-	// printf("debut of x = %d and y = %d. piece_x = %d and piece_y = %d\n", x, y, data->piece_x, data->piece_y);
+	// dprintf(data->debug_fd, "\n\n\ndebut of x = %d and y = %d. piece_x = %d and piece_y = %d, us_min,max = %c,%c, other_min,max = %c,%c\n",
+	 // x, y, data->piece_x, data->piece_y, data->us_min, data->us_max, data->other_min, data->other_max);
+	// print_piece(data->piece);
+	// print_map(data->board);
+	print_board_with_piece(data, x, y);
 	while (flag >= 0 && i < data->piece_x)
 	{
 		j = 0;
-		if (((y + j >= data->size_y || x + i >= data->size_x) && data->piece[i][j] == '*')
-			|| ((y < 0 || x < 0) && data->piece[i][j] == '*'))
+		if (data->piece[i][j] == '*' &&
+			(y + j >= data->size_y || x + i >= data->size_x || y + j < 0 || x + i < 0))
+		{
+			// dprintf(data->debug_fd, "error : Out of bondary 1\n");
 			flag = -1;
+		}
 		while (flag >= 0 && j < data->piece_y)
 		{
+			// dprintf(data->debug_fd, "i = %d, j = %d\n", i, j);
+			if (data->piece[i][j] == '*' &&
+				(y + j >= data->size_y || x + i >= data->size_x || y + j < 0 || x + i < 0))
+			{
+				// dprintf(data->debug_fd, "error : Out of bondary 2 x = %d, y = %d, i = %d, j = %d, size_x = %d and size_y = %d\n", x, y, i, j, data->size_x, data->size_y);
+				flag = -1;
+				break;
+			}
 			if (data->piece[i][j] == '*')
 				min = min != -1 && min < calculate_distance_piece(data, x + i, y + j) ? min : calculate_distance_piece(data, x + i, y + j);
+
 			if (x + i >= 0 && y + j >= 0 && x + i < data->size_x && y + j < data->size_y)
 			{
 				if (data->board[x + i][y + j] == data->us_max && data->piece[i][j] == '*')
 					 // flag = ((flag == 1) ? -1 : 1);
 				 {
-					 // printf("overlapping for x = %d, y = %d, i = %d, j = %d, size_x = %d and size_y = %d && flag = %d\n", x, y, i, j, data->size_x, data->size_y, flag);
+					 // dprintf(data->debug_fd, "overlapping for x = %d, y = %d, i = %d, j = %d, size_x = %d and size_y = %d && flag = %d\n", x, y, i, j, data->size_x, data->size_y, flag);
 					 if (flag == 1)
 					 	flag = -1;
 					else
 						flag = 1;
 				 }
 				 else
-				 	// printf("not overlapping for x = %d, y = %d, i = %d and j = %d\n", x, y, i, j);
+				 	// dprintf(data->debug_fd, "not overlapping for x = %d, y = %d, i = %d and j = %d\n", x, y, i, j);
 				if ((data->board[x + i][y + j] == data->other_min ||
 					data->board[x + i][y + j] == data->other_max) && data->piece[i][j] == '*')
 					flag = -1;
+				else
+				{
+					// dprintf(data->debug_fd, "going pas out because not overlapping enemy piece\n");
+				}
 			}
 			else
 			{
-				// printf("testing for i = %d and j = %d\n", i, j);
+				// dprintf(data->debug_fd, "testing for i = %d and j = %d\n", i, j);
 			}
-			// printf("i = %d, j = %d\n", i, j);
 			j++;
 		}
 		i++;
 	}
-	// if (flag == 1)
-	// {
-	// 	print_board_with_piece(data, x, y);
-	// }
+	if (flag == 1)
+	{
+		// print_board_with_piece(data, x, y);
+	}
 ;	return (flag == 1 ? min : 0);
 }
 
@@ -92,6 +111,7 @@ t_p	*create_pos_list(t_d *data)
 
 	ret = NULL;
 	points = data->points;
+	dprintf(data->debug_fd, "\n\n\n\nnew testing piece\n");
 	while (points)
 	{
 		dprintf(data->debug_fd, "testing point at %d-%d\n", points->x, points->y);
@@ -103,6 +123,7 @@ t_p	*create_pos_list(t_d *data)
 			{
 				if ((distance = is_possible_and_distance(data, points->x - i, points->y - j)))
 				{
+					dprintf(data->debug_fd, "Possible for %d - %d\n", i, j);
 					create_point(&ret, points->x - i, points->y - j);
 					if (!ret)
 					{
@@ -150,15 +171,6 @@ void	add_piece_to_board(t_d *data, t_p *coords)
 
 int	put_piece(t_d *data)
 {
-	// Si premier tour
-		// ajouter le point d'acc a notre liste
-		// aller vers le o majuscule
-    //Sinon
-	 	//calculer la distance entre chacun des points de notre liste chainee et les nouveaux points places
-	// Trier la liste en fonction des distances
-	// Tester toutes les positions possibles de la piece sur le point
-	// Poser la piece a la meilleure positions
-	// L'ajouter a la liste chainee
 	int i;
 	char *tmp;
 	t_p		*positions;
@@ -182,7 +194,6 @@ int	put_piece(t_d *data)
 	calculate_all_distances(data, data->to_search);
 	// print_list(data->points);
 	data->points = insert_sort(data->points, func);
-	// print_list(data->points);
 	positions = create_pos_list(data);
 	if (!positions)
 	{

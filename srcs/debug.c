@@ -30,9 +30,9 @@ void	print_list(t_p *list)
 	while (list)
 	{
 		if (list->next)
-			printf("%d->", list->distance);
+			printf("[%d][%d]%d->", list->x, list->y, list->distance);
 		else
-			printf("%d\n", list->distance);
+			printf("[%d][%d]%d\n", list->x, list->y, list->distance);
 		list = list->next;
 	}
 	printf("-------------------------\n");
@@ -52,15 +52,15 @@ void	print_board_with_piece(t_d *data, int x, int y)
 			if (j >= y && j < y + data->piece_y && i >= x && i < x + data->piece_x)
 			{
 				if (data->piece[i - x][j - y] == '*')
-					printf("*");
+					dprintf(data->debug_fd, "*");
 				else
-					printf("%c", data->board[i][j]);
+					dprintf(data->debug_fd, "%c", data->board[i][j]);
 			}
 			else
-				printf("%c", data->board[i][j]);
+				dprintf(data->debug_fd, "%c", data->board[i][j]);
 			j++;
 		}
-		printf("\n");
+		dprintf(data->debug_fd, "\n");
 		i++;
 	}
 }
