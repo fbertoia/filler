@@ -1,6 +1,6 @@
 #include <filler.h>
 
-int	func(void *a, void *b)
+int		func(void *a, void *b)
 {
 	t_p	*l1;
 	t_p	*l2;
@@ -10,7 +10,14 @@ int	func(void *a, void *b)
 	return (l2->distance - l1->distance);
 }
 
-void	*insert_sort(void *param,  t_func comp)
+void	first_swap(t_gen **list, t_gen *current, t_gen **l2, t_gen *tmp)
+{
+	*list = current->next;
+	*l2 = current;
+	current->next = tmp;
+}
+
+void	*insert_sort(void *param, t_func comp)
 {
 	t_gen	*list;
 	t_gen	*l2;
@@ -21,29 +28,19 @@ void	*insert_sort(void *param,  t_func comp)
 	l2 = NULL;
 	while (list)
 	{
-		printf("Current : %d\n", ((t_p*)list)->distance);
 		tmp = l2;
 		current = list;
 		if (!tmp || (tmp && comp(list, tmp) >= 0))
-		{
-			printf("First swap of %d\n", ((t_p*)list)->distance);
-			list = current->next;
-			l2 = current;
-			current->next = tmp;
-		}
+			first_swap(&list, current, &l2, tmp);
 		else
 		{
 			print_list((t_p*)l2);
-			while(tmp && tmp->next && comp(current, tmp->next) <= 0)
-			{
+			while (tmp && tmp->next && comp(current, tmp->next) <= 0)
 				tmp = tmp->next;
-			}
-			printf("Second swap of %d and %d. tmp->next = %p\n", ((t_p*)current)->distance, ((t_p*)tmp)->distance, tmp->next);
 			list = list->next;
 			current->next = tmp->next;
 			tmp->next = current;
 		}
 	}
-
 	return (l2);
 }
