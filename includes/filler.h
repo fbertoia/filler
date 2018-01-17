@@ -37,6 +37,7 @@ typedef struct	s_d
 	char	*av;
 	t_p		*points;
 	int		first_round;
+	int		log_fd;
 }				t_d;
 
 typedef struct	s_gen

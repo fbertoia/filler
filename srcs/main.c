@@ -16,9 +16,12 @@ int main(int ac, char **av)
 	data.first_round = 1;
 	data.av = av[0];
 	data.points = NULL;
+	data.log_fd = open("./log", O_WRONLY | O_CREAT);
 	state = state_first_line;
+
 	while ((get_next_line(0, &s)) > 0)
 	{
+		dprintf(data.log_fd, "%s\n", s);
 		if (state == state_first_line)
 		{
 			data.player_number = parse_first_line(s, av[0]);

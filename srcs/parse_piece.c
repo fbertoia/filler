@@ -57,9 +57,9 @@ int				ft_fill_piece(t_d *data, char *tmp, int i)
 	{
 		if (*tmp != '.' && *tmp != '*')
 		{
-			printf("here too ! - %c\n", *tmp);
 			return (0);
 		}
+		printf("i = %d and j = %d\n", i, j);
 		(data->piece)[i][j] = *tmp;
 		j++;
 		tmp++;
@@ -80,8 +80,10 @@ static int		parse_piece_other(t_d *data)
 
 	i = 0;
 	line = NULL;
+	printf("piece_x = %d and piece_y = %d\n", data->piece_x, data->piece_y);
 	while (i < data->piece_x && (k = get_next_line(0, &line)) > 0)
 	{
+		dprintf(data->log_fd, "%s\n", line);
 		if (!ft_fill_piece(data, line, i))
 			return (-3);
 		i++;
@@ -100,7 +102,7 @@ int					parse_piece(char *line, t_d *data)
 	i = 0;
 	if (parse_piece_line(line, data) < 0)
 	{
-		printf("Error: First piece line not ok.\n");
+		ft_printf("Error: First piece line not ok.\n");
 		return (-1);
 	}
 	if (!ft_create_piece(data))
@@ -110,9 +112,8 @@ int					parse_piece(char *line, t_d *data)
 	}
 	if ((i = parse_piece_other(data)) < 0)
 	{
-		printf("Error: Second piece line not ok. - %d. y = %d and x = %d\n", i, data->piece_y, data->piece_x);
+		ft_printf("Error: Second piece line not ok.");
 		return (-4);
 	}
-	print_piece(data->piece);
 	return (1);
 }

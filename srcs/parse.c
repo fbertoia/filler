@@ -132,6 +132,7 @@ static int		parse_board_other(t_d *data)
 	line = NULL;
 	while (i < data->size_x && (k = get_next_line(0, &line)) > 0)
 	{
+		dprintf(data->log_fd, "%s\n", line);
 		if (ft_atoi(line) != i)
 			return (-1);
 		if ((tmp = ft_strchr(line, ' ')) == NULL)
@@ -174,12 +175,12 @@ int				parse_2(t_d *data)
 {
 	if (parse_board_other(data) < 0)
 	{
-		printf("Error: Board line error.\n");
+		ft_printf("Error: Board line error.\n");
 		return (-5);
 	}
 	if (!pieces_ok(data->board))
 	{
-		printf("Error: No pieces on board.\n");
+		ft_printf("Error: No pieces on board.\n");
 		return (-6);
 	}
 	return (1);
@@ -194,7 +195,7 @@ int				parse_board(char *line, t_d *data)
 	l2 = NULL;
 	if ((i = parse_board_line(line, data)) < 0)
 	{
-		printf("Error: First board line not ok. - %d\n", i);
+		ft_printf("Error: First board line not ok.\n");
 		return (-1);
 	}
 	if (!ft_create_board(data))
@@ -204,15 +205,15 @@ int				parse_board(char *line, t_d *data)
 	}
 	if (get_next_line(0, &l2) <= 0)
 		return (-3);
-	if (parse_board_second_line(l2, data) < 0)
+	dprintf(data->log_fd, "%s\n", l2);
+	if ((i = parse_board_second_line(l2, data)) < 0)
 	{
-		printf("Error: Second board line not ok.\n");
+		ft_printf("Error: Second board line not ok. i = %d\n", i);
 		ft_memdel((void**)&l2);
 		return (-4);
 	}
 	ft_memdel((void**)&l2);
 	if (parse_2(data) < 0)
 		return (-5);
-	print_map(data->board);
 	return (1);
 }

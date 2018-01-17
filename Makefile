@@ -5,7 +5,7 @@ SRC_NAME = main.c \
 			delboard.c \
 			put_piece.c \
 			sort.c \
-			list.cw
+			list.c
 
 OBJ_PATH = ./obj/
 
@@ -17,7 +17,7 @@ NAME = jcamhi.filler
 
 CC = gcc
 CFLAGS =  -Wextra -Wall -g -fsanitize=address
-LFLAGS = -lft
+LFLAGS = -lft -lftprintf
 LIB_DIR=./lib/
 
 OBJ_NAME = $(SRC_NAME:.c=.o)
@@ -37,6 +37,7 @@ LIB_RULE:
 
 $(NAME) : $(OBJ)
 	make -C libft
+	make -C ft_printf
 	$(CC) $(CFLAGS) $(OBJ) -L $(LIB_DIR) $(LFLAGS) -o $@
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
@@ -47,10 +48,12 @@ clean:
 	@rm -fv $(OBJ)
 	@rmdir -p $(OBJ_PATH) 2> /dev/null || true
 	@make -C libft clean
+	@make -C ft_printf clean
 
 fclean: clean
 	@rm -fv $(NAME)
 	@make -C libft fclean
+	@make -C ft_printf fclean
 	@rmdir lib 2> /dev/null || true
 
 re: fclean all

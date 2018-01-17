@@ -24,7 +24,6 @@ int		calculate_distance_piece(t_d *data, int x, int y)
 
 int	is_possible_and_distance(t_d *data, int x, int y)
 {
-	printf("is possible : testing for : %d %d\n", x, y);
 	int i;
 	int j;
 	int flag;
@@ -34,7 +33,7 @@ int	is_possible_and_distance(t_d *data, int x, int y)
 	flag = 0;
 	min = -1;
 	while (x >= 0 && y >= 0 && (x + i < data->size_x ||
-		data->board[x + i][y + j] != '*') && flag >= 0 && i < data->piece_x)
+		data->board[x + i][y] != '*') && flag >= 0 && i < data->piece_x)
 	{
 		j = 0;
 		while (flag >= 0 && j < data->piece_y && (y + j < data->size_y ||
@@ -44,7 +43,6 @@ int	is_possible_and_distance(t_d *data, int x, int y)
 				min = min != -1 && min < calculate_distance_piece(data, x + i, y + j) ? min : calculate_distance_piece(data, x + i, y + j);
 			if (data->board[x + i][y + j] == data->us_max && data->piece[i][j] == '*')
 			{
-				printf("when succeed :%d %d\n", x + i, y + j);
 				 flag = (flag == 1) ? -1 : 1;
 			}
 			if ((data->board[x + i][y + j] == data->other_min ||
@@ -54,11 +52,10 @@ int	is_possible_and_distance(t_d *data, int x, int y)
 		}
 		i++;
 	}
-	printf("flag = %d\n", flag);
-	if (flag == 1)
-	{
-		print_board_with_piece(data, x, y);
-	}
+	// if (flag == 1)
+	// {
+	// 	print_board_with_piece(data, x, y);
+	// }
 	return (flag == 1 ? min : 0);
 }
 
@@ -89,7 +86,7 @@ t_p	*create_pos_list(t_d *data)
 			{
 				if ((distance = is_possible_and_distance(data, points->x - i, points->y - j)))
 				{
-					printf("Create_pos_liste : les position de x = %d, y = %d\n", points->x - i, points->y - j);
+					// printf("Create_pos_liste : les position de x = %d, y = %d and distance = %d\n", points->x - i, points->y - j, distance);
 					create_point(&ret, points->x - i, points->y - j);
 					if (!ret)
 						return (NULL);
@@ -98,6 +95,11 @@ t_p	*create_pos_list(t_d *data)
 				j++;
 			}
 			i++;
+		}
+		if (ret)
+		{
+			ret = insert_sort(ret, func);
+			return (ret);
 		}
 		points = points->next;
 	}
@@ -133,11 +135,12 @@ int	put_piece(t_d *data)
 		data->to_search = data->other_max;
 	}
 	calculate_all_distances(data, data->to_search);
-	print_list(data->points);
+	// print_list(data->points);
 	data->points = insert_sort(data->points, func);
-	print_list(data->points);
+	// print_list(data->points);
 	positions = create_pos_list(data);
 	if (!positions)
 		return (0);
+	ft_printf("%d %d\n", positions->x, positions->y);
 	return (1);
 }

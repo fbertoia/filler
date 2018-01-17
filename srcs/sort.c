@@ -34,7 +34,6 @@ void	*insert_sort(void *param, t_func comp)
 			first_swap(&list, current, &l2, tmp);
 		else
 		{
-			print_list((t_p*)l2);
 			while (tmp && tmp->next && comp(current, tmp->next) <= 0)
 				tmp = tmp->next;
 			list = list->next;
