@@ -3,38 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atgerard <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jcamhi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/23 12:10:42 by atgerard          #+#    #+#             */
-/*   Updated: 2017/10/23 12:10:44 by atgerard         ###   ########.fr       */
+/*   Created: 2015/11/24 17:10:13 by jcamhi            #+#    #+#             */
+/*   Updated: 2015/11/26 08:29:40 by jcamhi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <libft.h>
 
-char	*ft_strtrim(const char *s)
+char	*ft_strtrim(char const *s)
 {
-	unsigned int	i;
-	int				j;
-	int				tmp;
-	char			*res;
+	int	i;
+	int	len;
+	int	stay;
 
 	if (!s)
-		return (0);
+		return (NULL);
 	i = 0;
-	j = -1;
-	while (s[++j] == ' ' || s[j] == '\t' || s[j] == '\n')
-		++i;
-	tmp = j--;
-	while (s[++j])
-		if ((s[j] == ' ' || s[j] == '\t' || s[j] == '\n') &&
-				!(s[j - 1] == ' ' || s[j - 1] == '\t' || s[j - 1] == '\n'))
-			tmp = j;
-	if (!(s[j - 1] == ' ' || s[j - 1] == '\t' || s[j - 1] == '\n'))
-		tmp = j;
-	if (!(res = (char*)malloc(sizeof(char) * (tmp - i))))
-		return (0);
-	res = ft_strsub(s, i, tmp - i);
-	res[tmp - i] = 0;
-	return (res);
+	len = 0;
+	while (s[i] == '\n' || s[i] == ' ' || s[i] == '\t')
+		i++;
+	stay = i;
+	i = (int)ft_strlen(s) - 1;
+	while ((s[i - len] == '\n' || s[i - len] == ' ' || s[i - len] == '\t' ||
+				s[i - len] == '\0') && (i - len > 0))
+		len++;
+	if (i == len)
+		return (ft_strdup(""));
+	return (ft_strsub(s, stay, i - stay - len + 1));
 }

@@ -1,26 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_recur_power.c                                   :+:      :+:    :+:   */
+/*   ft_alloc_str_with_char.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atgerard <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jcamhi <jcamhi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/23 12:05:59 by atgerard          #+#    #+#             */
-/*   Updated: 2017/10/23 12:06:01 by atgerard         ###   ########.fr       */
+/*   Created: 2015/12/30 09:14:31 by jcamhi            #+#    #+#             */
+/*   Updated: 2016/01/07 12:30:46 by jcamhi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <libft.h>
 
-long	ft_recur_power(int nb, int pow)
+char	*ft_alloc_str_with_char(int c)
 {
-	if (nb == 1)
-		return (1);
-	if (pow < 0)
-		return (0);
-	if (pow == 0)
-		return (1);
-	if (nb == 0)
-		return (0);
-	return (nb * ft_recur_power(nb, pow - 1));
+	char	*ret;
+
+	ret = (char*)mallocp(2 * sizeof(char));
+	ret[0] = c;
+	ret[1] = '\0';
+	return (ret);
 }

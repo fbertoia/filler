@@ -2,7 +2,8 @@
 # define FILLER_H
 
 # include <libft.h>
-
+# include <stdio.h>
+# include <ft_printf.h>
 
 enum e_flag
 {
@@ -38,6 +39,7 @@ typedef struct	s_d
 	t_p		*points;
 	int		first_round;
 	int		log_fd;
+	int		debug_fd;
 }				t_d;
 
 typedef struct	s_gen

@@ -16,7 +16,8 @@ int main(int ac, char **av)
 	data.first_round = 1;
 	data.av = av[0];
 	data.points = NULL;
-	data.log_fd = open("./log", O_WRONLY | O_CREAT);
+	data.log_fd = open("./log", O_WRONLY | O_CREAT | O_TRUNC);
+	data.debug_fd = open("./debug", O_WRONLY | O_CREAT | O_TRUNC);
 	state = state_first_line;
 
 	while ((get_next_line(0, &s)) > 0)
@@ -49,22 +50,25 @@ int main(int ac, char **av)
 		else if (state == state_board)
 		{
 			if (parse_board(s, &data) <= 0)
-				return (1);
+			{
+				return (2);
+			}
 			state = state_piece;
 		}
 		else if (state == state_piece)
 		{
 			if (parse_piece(s, &data) <= 0)
-				return (1);
-			print_map(data.board);
-			print_piece(data.piece);
+				return (3);
+			// print_map(data.board);
+			// print_piece(data.piece);
 			if (!put_piece(&data))
-				return (1);
-			state = state_board;
+				return (4);
 			data.piece_x = -1;
 			data.piece_y = -1;
 			delboard(&data);
 			data.piece = NULL;
+			data.first_round = 0;
+			state = state_board;
 		}
 		ft_memdel((void**)&s);
 	}

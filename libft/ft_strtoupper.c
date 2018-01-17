@@ -1,20 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_excep_itoa.c                                    :+:      :+:    :+:   */
+/*   ft_strtoupper.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atgerard <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jcamhi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/23 11:40:34 by atgerard          #+#    #+#             */
-/*   Updated: 2017/10/23 11:40:42 by atgerard         ###   ########.fr       */
+/*   Created: 2016/01/06 18:56:06 by jcamhi            #+#    #+#             */
+/*   Updated: 2016/02/01 15:33:56 by jcamhi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <libft.h>
 
-char	*ft_excep_itoa(int n)
+char	*ft_strtoupper(char *str)
 {
-	if (n == 0)
-		return (ft_strdup("0"));
-	return (ft_strdup("-2147483648"));
+	int i;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		str[i] = ft_toupper(str[i]);
+		i++;
+	}
+	return (str);
 }

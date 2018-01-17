@@ -35,6 +35,7 @@ void	print_list(t_p *list)
 			printf("%d\n", list->distance);
 		list = list->next;
 	}
+	printf("-------------------------\n");
 }
 
 void	print_board_with_piece(t_d *data, int x, int y)

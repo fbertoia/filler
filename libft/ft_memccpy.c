@@ -3,28 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memccpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atgerard <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jcamhi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/23 11:52:10 by atgerard          #+#    #+#             */
-/*   Updated: 2017/10/23 11:52:13 by atgerard         ###   ########.fr       */
+/*   Created: 2015/11/23 11:40:47 by jcamhi            #+#    #+#             */
+/*   Updated: 2015/11/26 11:45:17 by jcamhi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <stddef.h>
 
-void	*ft_memccpy(void *dst, const void *src, int n, size_t len)
+void	*ft_memccpy(void *dst,
+		const void *src, int c, size_t n)
 {
-	unsigned char	c;
-	unsigned char	*tmp_dst;
-	unsigned char	*tmp_src;
+	unsigned char	*curdst;
+	unsigned char	*cursrc;
+	int				i;
 
-	tmp_dst = (unsigned char*)dst;
-	tmp_src = (unsigned char*)src;
-	c = (unsigned char)n;
-	while (len-- && *tmp_src != c)
-		*(tmp_dst++) = *(tmp_src++);
-	if (*tmp_src != c)
-		return (NULL);
-	*(tmp_dst++) = *(tmp_src++);
-	return ((void*)tmp_dst);
+	curdst = (unsigned char *)dst;
+	cursrc = (unsigned char *)src;
+	i = 0;
+	while (i < (int)n)
+	{
+		*curdst = *cursrc;
+		if (*cursrc == (unsigned char)c)
+			return (curdst + 1);
+		i++;
+		curdst++;
+		cursrc++;
+	}
+	return (NULL);
 }

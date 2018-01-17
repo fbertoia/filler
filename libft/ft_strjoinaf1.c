@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   ft_strjoinaf1.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcamhi <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: jcamhi <jcamhi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/11/24 16:45:47 by jcamhi            #+#    #+#             */
-/*   Updated: 2015/11/25 09:47:57 by jcamhi           ###   ########.fr       */
+/*   Created: 2016/01/05 13:41:24 by jcamhi            #+#    #+#             */
+/*   Updated: 2016/09/01 18:01:18 by jcamhi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
+#include "libft.h"
 #include <stdlib.h>
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoinaf1(char *s1, char const *s2)
 {
 	int		i;
 	size_t	len;
@@ -37,5 +37,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	while (s2[++i] != '\0')
 		res[len + i] = s2[i];
 	res[len + i] = '\0';
+	free(s1);
 	return (res);
 }

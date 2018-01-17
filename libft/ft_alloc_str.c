@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bin_to_deci.c                                      :+:      :+:    :+:   */
+/*   ft_alloc_str.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atgerard <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jcamhi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/23 11:39:56 by atgerard          #+#    #+#             */
-/*   Updated: 2017/10/23 11:39:58 by atgerard         ###   ########.fr       */
+/*   Created: 2016/01/04 19:18:50 by jcamhi            #+#    #+#             */
+/*   Updated: 2016/11/20 15:00:23 by jcamhi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <libft.h>
 
-int		bin_to_deci(char *nbr)
+char	*ft_alloc_str(const char *str)
 {
-	int		i;
-	int		res;
+	char	*truc;
 
-	if (nbr[0] == '0' && !nbr[1])
-		return (0);
-	i = 8;
-	res = 0;
-	while (i-- > 0)
-		res += (nbr[i] - '0') * ft_recur_power(2, 7 - i);
-	return (res);
+	if (str == NULL)
+		return (ft_alloc_str("(null)"));
+	truc = (char*)mallocp(ft_strlen(str) + 1);
+	ft_strcpy(truc, str);
+	return (truc);
 }

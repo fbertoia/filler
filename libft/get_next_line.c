@@ -1,4 +1,18 @@
-#include "libft.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jcamhi <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/08/31 18:52:58 by jcamhi            #+#    #+#             */
+/*   Updated: 2016/08/31 18:53:03 by jcamhi           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include <unistd.h>
+#include <stdlib.h>
+#include <libft.h>
 
 static t_gnl	*ft_lstdict(t_gnl *lst, const int n)
 {
@@ -16,7 +30,7 @@ static t_gnl	*gnl_add_elem(t_gnl **list, const int fd)
 	t_gnl	*beginning;
 	t_gnl	*elem;
 
-	elem = malloc(sizeof(t_gnl));
+	elem = mallocp(sizeof(t_gnl));
 	elem->fd = fd;
 	elem->line = NULL;
 	elem->next = NULL;

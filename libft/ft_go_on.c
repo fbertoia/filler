@@ -1,25 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putlong_long.c                                  :+:      :+:    :+:   */
+/*   ft_go_on.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atgerard <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jcamhi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/23 12:03:29 by atgerard          #+#    #+#             */
-/*   Updated: 2017/10/23 12:03:31 by atgerard         ###   ########.fr       */
+/*   Created: 2016/01/05 14:05:59 by jcamhi            #+#    #+#             */
+/*   Updated: 2016/01/05 14:10:11 by jcamhi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <libft.h>
+#include <stdlib.h>
 
-void	ft_putlong_long(long long nb)
+void	*ft_go_on(void *str, int i)
 {
-	if (nb % 10 + '0' == '(')
-	{
-		ft_putstr("9223372036854775808");
-		return ;
-	}
-	if (nb / 10 > 0)
-		ft_putlong_long(nb / 10);
-	ft_putchar(nb % 10 + '0');
+	char	*tmp;
+
+	tmp = (void*)ft_strdup((char*)str + i);
+	free(str);
+	return (tmp);
 }

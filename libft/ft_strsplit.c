@@ -3,39 +3,79 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strsplit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atgerard <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: JeremShy <JeremShy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/23 12:10:19 by atgerard          #+#    #+#             */
-/*   Updated: 2017/10/23 12:10:20 by atgerard         ###   ########.fr       */
+/*   Created: 2015/11/24 18:24:48 by jcamhi            #+#    #+#             */
+/*   Updated: 2015/12/19 18:55:31 by JeremShy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <libft.h>
+#include <stdlib.h>
 
-char	**ft_strsplit(const char *str, char c)
+static	int		ft_strcount(char const *s, char const c)
 {
-	int		i;
-	int		j;
-	int		word;
-	int		length;
-	char	**dest;
+	int i;
+	int count;
 
-	word = ft_nb_words(str, c);
-	if (!str || !(dest = (char**)malloc(sizeof(dest) * (word + 1))))
-		return (NULL);
 	i = 0;
-	j = -1;
-	while (++j < word)
+	count = 0;
+	while (s[i] != '\0')
 	{
-		while (str[i] == c)
-			++i;
-		length = ft_len_split_word(str + i, c);
-		dest[j] = (char*)malloc(sizeof(*dest) * (length + 1));
-		if (!dest[j])
-			return (NULL);
-		ft_fill_word(dest[j], str + i, length);
-		i = i + length;
+		while (s[i] == c && s[i] != '\0')
+			i++;
+		if (s[i] != '\0')
+			count++;
+		while (s[i] != c && s[i] != '\0')
+			i++;
 	}
-	dest[j] = 0;
-	return (dest);
+	return (count);
+}
+
+static	int		poulet(size_t i, size_t j, char const *s, char c)
+{
+	while (s[i + j] != c && s[i + j] != '\0')
+		j++;
+	return (j);
+}
+
+static	char	**ft_fln(char const *s, char **res, size_t *x, char c)
+{
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	*x = 0;
+	while (s[i] != '\0')
+	{
+		while (s[i] == c && s[i] != '\0')
+			i++;
+		j = 0;
+		j = poulet(i, j, s, c);
+		if (s[i + j] != '\0' || s[i + j - 1] != c)
+		{
+			res[*x] = ft_strsub(s, i, j);
+			*x = *x + 1;
+		}
+		i += j;
+	}
+	return (res);
+}
+
+char			**ft_strsplit(char const *s, char c)
+{
+	char	**res;
+	size_t	x;
+
+	res = mallocp((ft_strcount(s, c) + 1) * sizeof(char*));
+	if (!s || !res)
+		return (NULL);
+	if (ft_strcount(s, c) == 0)
+	{
+		res[0] = NULL;
+		return (res);
+	}
+	res = ft_fln(s, res, &x, c);
+	res[x] = NULL;
+	return (res);
 }

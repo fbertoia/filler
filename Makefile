@@ -1,5 +1,5 @@
 SRC_NAME = main.c \
-			parse.c \
+			parse_board.c \
 			debug.c \
 			parse_piece.c \
 			delboard.c \
@@ -9,13 +9,14 @@ SRC_NAME = main.c \
 
 OBJ_PATH = ./obj/
 
-INC_PATH = ./includes ./libft/
+INC_PATH = ./includes ./libft/includes ./ft_printf/includes
 
 SRC_PATH = ./srcs/
 
 NAME = jcamhi.filler
 
 CC = gcc
+# CFLAGS =  -Wextra -Wall -g
 CFLAGS =  -Wextra -Wall -g -fsanitize=address
 LFLAGS = -lft -lftprintf
 LIB_DIR=./lib/

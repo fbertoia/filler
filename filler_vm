@@ -315,6 +315,8 @@ class Player
 					trace.trace_msg("#{self.file_name}: Bus error at #{self.score}\n")
 					puts("#{self.file_name}: Bus error at #{self.score}\n")
 					@segfault = "Bus error"
+				else
+					print "Player died #{self.file_name} :(\n"
 				end
 			end
 		end

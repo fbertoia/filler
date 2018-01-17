@@ -3,30 +3,58 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atgerard <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jcamhi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/23 12:03:54 by atgerard          #+#    #+#             */
-/*   Updated: 2017/10/23 12:03:55 by atgerard         ###   ########.fr       */
+/*   Created: 2015/11/25 09:10:19 by jcamhi            #+#    #+#             */
+/*   Updated: 2015/11/26 09:46:46 by jcamhi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <libft.h>
+#include <unistd.h>
 
-void	ft_putnbr(long nb)
+static	int		ft_pow(int nb, int pow)
 {
-	if (nb == -2147483648)
+	if (pow == 0)
+		return (1);
+	else
+		return (nb * ft_pow(nb, pow - 1));
+}
+
+static	void	ft_printing(int taille, int c)
+{
+	while (taille >= 0)
 	{
-		ft_putchar('-');
-		ft_putchar('2');
-		ft_putnbr(147483648);
+		ft_putchar((char)(c / (ft_pow(10, taille)) + (int)'0'));
+		c %= ft_pow(10, taille);
+		taille--;
+	}
+}
+
+void			ft_putnbr(int c)
+{
+	int	taille;
+	int	tmp;
+
+	if (c == 0)
+		ft_putchar('0');
+	if (c == -2147483648)
+	{
+		write(1, "-2147483648", 11);
 		return ;
 	}
-	if (nb < 0)
+	if (c < 0)
 	{
-		nb = nb * (-1);
 		ft_putchar('-');
+		c = c * -1;
 	}
-	if (nb / 10 > 0)
-		ft_putnbr(nb / 10);
-	ft_putchar(nb % 10 + '0');
+	tmp = c;
+	taille = 0;
+	while (tmp != 0)
+	{
+		tmp /= 10;
+		taille += 1;
+	}
+	taille--;
+	ft_printing(taille, c);
 }

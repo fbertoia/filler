@@ -1,36 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_nb_words.c                                      :+:      :+:    :+:   */
+/*   ft_wstrlen.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atgerard <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jcamhi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/23 11:54:30 by atgerard          #+#    #+#             */
-/*   Updated: 2017/10/23 11:54:32 by atgerard         ###   ########.fr       */
+/*   Created: 2016/01/15 12:39:54 by jcamhi            #+#    #+#             */
+/*   Updated: 2016/01/18 11:31:45 by jcamhi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <string.h>
+#include <stdio.h>
 
-int		ft_nb_words(const char *str, char c)
+size_t	ft_wstrlen(const char *s)
 {
-	int		i;
-	int		words;
+	size_t	i;
+	int		b;
+	int		count;
 
-	if (!str)
-		return (0);
 	i = 0;
-	words = 0;
-	while (str[i] != '\0')
+	count = 0;
+	b = 0;
+	while (s[i] != '\0')
 	{
-		if (str[i] != c)
+		if (s[i] > 0)
+			count++;
+		else
+			b++;
+		if (b == 3)
 		{
-			++words;
-			while (str[i] && str[i] != c)
-				++i;
+			count++;
+			b = 0;
 		}
-		while (str[i] == c)
-			++i;
+		i++;
 	}
-	return (words);
+	return (count);
 }
