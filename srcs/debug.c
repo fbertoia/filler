@@ -23,3 +23,16 @@ void	print_piece(char **piece)
 		i++;
 	}
 }
+
+void	print_list(t_p *list)
+{
+	printf("-------------------------\n");
+	while (list)
+	{
+		if (list->next)
+			printf("%d->", list->distance);
+		else
+			printf("%d\n", list->distance);
+		list = list->next;
+	}
+}

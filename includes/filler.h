@@ -3,6 +3,7 @@
 
 # include <libft.h>
 
+
 enum e_flag
 {
 	state_first_line,
@@ -12,10 +13,10 @@ enum e_flag
 
 typedef struct s_p
 {
+	struct s_p	*next;
 	int			distance;
 	int			x;
 	int			y;
-	struct s_p	*next;
 }				t_p;
 
 typedef struct	s_d
@@ -37,6 +38,13 @@ typedef struct	s_d
 	int		first_round;
 }				t_d;
 
+typedef struct	s_gen
+{
+	struct s_gen	*next;
+}				t_gen;
+
+typedef int (*t_func)(void *a, void *b);
+
 int		parse_first_line(char *line, char *av);
 int		parse_board(char *line, t_d *data);
 void	print_map(char **map);
@@ -46,6 +54,10 @@ void	print_piece(char **piece);
 int		delboard(t_d *data);
 int		delpiece(t_d *data);
 int		put_piece(t_d *data);
+
+void		*insert_sort(void *list, t_func comp);
+int	func(void *a, void *b);
+void	print_list(t_p *list);
 
 
 #endif

@@ -3,7 +3,8 @@ SRC_NAME = main.c \
 			debug.c \
 			parse_piece.c \
 			delboard.c \
-			put_piece.c
+			put_piece.c \
+			sort.c
 
 OBJ_PATH = ./obj/
 

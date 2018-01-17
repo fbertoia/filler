@@ -3,7 +3,6 @@
 int	create_point(t_d *data, int x, int y)
 {
 	t_p *tmp;
-	printf("creating point with x = %d and y = %d\n", x, y);
 
 	if (!data->points)
 	{
@@ -35,7 +34,6 @@ int		calculate_distance(t_d *data, t_p *point, char to_search)
 
 	min = -1;
 	i = 0;
-	printf("to search : %c\n", to_search);
 	while (data->board[i])
 	{
 		j = 0;
@@ -43,11 +41,9 @@ int		calculate_distance(t_d *data, t_p *point, char to_search)
 		{
 			if (data->board[i][j] == to_search)
 			{
-				printf("found enemy piece. at x = %d and y = %d. distance = %d\n", i, j, (point->x - i) * (point->x - i) + (point->y - j) * (point->y - j));
 				if (min == -1 || (point->x - i) * (point->x - i) + (point->y - j) * (point->y - j) < min)
 				{
 					min = (point->x - i) * (point->x - i) + (point->y - j) * (point->y - j);
-					printf("new min, with distance = %d\n", min);
 				}
 			}
 			j++;
@@ -65,7 +61,6 @@ void	calculate_all_distances(t_d *data, char	to_search)
 	while (tmp)
 	{
 		tmp->distance =	calculate_distance(data, tmp, to_search);
-		printf("distance : %d\n", tmp->distance);
 		tmp = tmp->next;
 	}
 }
@@ -98,5 +93,8 @@ int	put_piece(t_d *data)
 		to_search = data->other_max;
 	}
 	calculate_all_distances(data, to_search);
+	print_list(data->points);
+	data->points = insert_sort(data->points, func);
+	print_list(data->points);
 	return (1);
 }
