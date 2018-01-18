@@ -55,7 +55,7 @@ int main(int ac, char **av)
 				return (2);
 			}
 			state = state_piece;
-			print_list(data.enemy_points);
+			// print_list(data.enemy_points);
 		}
 		else if (state == state_piece)
 		{

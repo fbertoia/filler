@@ -21,7 +21,7 @@ typedef struct s_p
 }				t_p;
 
 typedef struct	s_d
-{c
+{
 	int		player_number;
 	char	other_min;
 	char	other_max;
