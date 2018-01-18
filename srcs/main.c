@@ -59,8 +59,6 @@ int main(int ac, char **av)
 		{
 			if (parse_piece(s, &data) <= 0)
 				return (3);
-			// print_map(data.board);
-			// print_piece(data.piece);
 			if (!put_piece(&data))
 				return (4);
 			data.piece_x = -1;
