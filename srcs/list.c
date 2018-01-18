@@ -26,29 +26,20 @@ int	create_point(t_p **points, int x, int y)
 	return (1);
 }
 
-int		calculate_distance(t_d *data, t_p *point, char to_search)
+int		calculate_distance(t_d *data, t_p *point)
 {
-	int	i;
-	int	j;
 	int	min;
+	t_p	*tmp;
 
+	tmp = data->enemy_points;
 	min = -1;
-	i = 0;
-	while (data->board[i])
+	while (tmp)
 	{
-		j = 0;
-		while(data->board[i][j])
+		if (min == -1 || (point->x - tmp->x) * (point->x - tmp->x) + (point->y - tmp->y) * (point->y - tmp->y) < min)
 		{
-			if (data->board[i][j] == to_search)
-			{
-				if (min == -1 || (point->x - i) * (point->x - i) + (point->y - j) * (point->y - j) < min)
-				{
-					min = (point->x - i) * (point->x - i) + (point->y - j) * (point->y - j);
-				}
-			}
-			j++;
+			min = (point->x - tmp->x) * (point->x - tmp->x) + (point->y - tmp->y) * (point->y - tmp->y);
 		}
-		i++;
+		tmp = tmp->next;
 	}
 	return (min);
 }

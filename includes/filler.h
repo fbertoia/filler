@@ -37,6 +37,7 @@ typedef struct	s_d
 	char	**piece;
 	char	*av;
 	t_p		*points;
+	t_p		*enemy_points;
 	int		first_round;
 	int		log_fd;
 	int		debug_fd;
@@ -57,6 +58,8 @@ int		cmp(char *line, int *i, char c);
 void	print_piece(char **piece);
 int		delboard(t_d *data);
 int		delpiece(t_d *data);
+void	dellist(t_p **list);
+
 int		put_piece(t_d *data);
 
 void		*insert_sort(void *list, t_func comp);
@@ -64,7 +67,7 @@ int	func(void *a, void *b);
 void	print_list(t_p *list);
 void	print_board_with_piece(t_d *data, int x, int y);
 int		create_point(t_p **points, int x, int y);
-int		calculate_distance(t_d *data, t_p *point, char to_search);
+int		calculate_distance(t_d *data, t_p *point);
 
 
 #endif

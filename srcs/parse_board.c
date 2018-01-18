@@ -111,6 +111,10 @@ int				ft_fill_board(t_d *data, char *tmp, int i)
 		if (*tmp != '.' && *tmp != 'o' && *tmp != 'O'
 				&& *tmp != 'x' && *tmp != 'X')
 			return (0);
+		if (*tmp == data->other_max && (data->first_round || data->board[i][j] != *tmp))
+		{
+			create_point(&(data->enemy_points), i, j);
+		}
 		(data->board)[i][j] = *tmp;
 		j++;
 		tmp++;
@@ -198,10 +202,13 @@ int				parse_board(char *line, t_d *data)
 		ft_printf("Error: First board line not ok.\n");
 		return (-1);
 	}
-	if (!ft_create_board(data))
+	if (data->first_round)
 	{
-		perror(data->av);
-		return (-2);
+		if (!ft_create_board(data))
+		{
+			perror(data->av);
+			return (-2);
+		}
 	}
 	if (get_next_line(0, &l2) <= 0)
 		return (-3);

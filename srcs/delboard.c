@@ -27,3 +27,15 @@ int		delboard(t_d *data)
 	ft_memdel((void**)(&data->board));
 	return (1);
 }
+
+void	dellist(t_p **list)
+{
+	t_p *tmp;
+
+	while(*list)
+	{
+		tmp = (*list)->next;
+		ft_memdel((void**)list);
+		*list = tmp;
+	}
+}

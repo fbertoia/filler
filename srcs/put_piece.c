@@ -1,13 +1,13 @@
 #include <filler.h>
 
-void	calculate_all_distances(t_d *data, char	to_search)
+void	calculate_all_distances(t_d *data)
 {
 	t_p	*tmp;
 
 	tmp = data->points;
 	while (tmp)
 	{
-		tmp->distance =	calculate_distance(data, tmp, to_search);
+		tmp->distance =	calculate_distance(data, tmp);
 		tmp = tmp->next;
 	}
 }
@@ -18,7 +18,7 @@ int		calculate_distance_piece(t_d *data, int x, int y)
 
 	point.x = x;
 	point.y = y;
-	return (calculate_distance(data, &point, data->to_search));
+	return (calculate_distance(data, &point));
 }
 
 int	is_possible_and_distance(t_d *data, int x, int y)
@@ -169,7 +169,7 @@ int	put_piece(t_d *data)
 			i++;
 		}
 	}
-	calculate_all_distances(data, data->to_search);
+	calculate_all_distances(data);
 	data->points = insert_sort(data->points, func);
 	positions = create_pos_list(data);
 	if (!positions)
