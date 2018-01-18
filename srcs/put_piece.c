@@ -31,10 +31,6 @@ int	is_possible_and_distance(t_d *data, int x, int y)
 	i = 0;
 	flag = 0;
 	min = -1;
-	// dprintf(data->debug_fd, "\n\n\ndebut of x = %d and y = %d. piece_x = %d and piece_y = %d, us_min,max = %c,%c, other_min,max = %c,%c\n",
-	 // x, y, data->piece_x, data->piece_y, data->us_min, data->us_max, data->other_min, data->other_max);
-	// print_piece(data->piece);
-	// print_map(data->board);
 	print_board_with_piece(data, x, y);
 	while (flag >= 0 && i < data->piece_x)
 	{
@@ -42,16 +38,13 @@ int	is_possible_and_distance(t_d *data, int x, int y)
 		if (data->piece[i][j] == '*' &&
 			(y + j >= data->size_y || x + i >= data->size_x || y + j < 0 || x + i < 0))
 		{
-			// dprintf(data->debug_fd, "error : Out of bondary 1\n");
 			flag = -1;
 		}
 		while (flag >= 0 && j < data->piece_y)
 		{
-			// dprintf(data->debug_fd, "i = %d, j = %d\n", i, j);
 			if (data->piece[i][j] == '*' &&
 				(y + j >= data->size_y || x + i >= data->size_x || y + j < 0 || x + i < 0))
 			{
-				// dprintf(data->debug_fd, "error : Out of bondary 2 x = %d, y = %d, i = %d, j = %d, size_x = %d and size_y = %d\n", x, y, i, j, data->size_x, data->size_y);
 				flag = -1;
 				break;
 			}
@@ -61,37 +54,22 @@ int	is_possible_and_distance(t_d *data, int x, int y)
 			if (x + i >= 0 && y + j >= 0 && x + i < data->size_x && y + j < data->size_y)
 			{
 				if (data->board[x + i][y + j] == data->us_max && data->piece[i][j] == '*')
-					 // flag = ((flag == 1) ? -1 : 1);
 				 {
-					 // dprintf(data->debug_fd, "overlapping for x = %d, y = %d, i = %d, j = %d, size_x = %d and size_y = %d && flag = %d\n", x, y, i, j, data->size_x, data->size_y, flag);
 					 if (flag == 1)
 					 	flag = -1;
 					else
 						flag = 1;
 				 }
 				 else
-				 	// dprintf(data->debug_fd, "not overlapping for x = %d, y = %d, i = %d and j = %d\n", x, y, i, j);
 				if ((data->board[x + i][y + j] == data->other_min ||
 					data->board[x + i][y + j] == data->other_max) && data->piece[i][j] == '*')
 					flag = -1;
-				else
-				{
-					// dprintf(data->debug_fd, "going pas out because not overlapping enemy piece\n");
-				}
-			}
-			else
-			{
-				// dprintf(data->debug_fd, "testing for i = %d and j = %d\n", i, j);
 			}
 			j++;
 		}
 		i++;
 	}
-	if (flag == 1)
-	{
-		// print_board_with_piece(data, x, y);
-	}
-;	return (flag == 1 ? min : 0);
+	return (flag == 1 ? min : 0);
 }
 
 void	add_distance(t_p *ret, int distance)
@@ -192,19 +170,13 @@ int	put_piece(t_d *data)
 		}
 	}
 	calculate_all_distances(data, data->to_search);
-	// print_list(data->points);
 	data->points = insert_sort(data->points, func);
 	positions = create_pos_list(data);
 	if (!positions)
 	{
-		// print_map(data->board);
-		// print_piece(data->piece);
 		dprintf(data->debug_fd, "error 1\n");
 		return (0);
 	}
-	// print_map(data->board);
-	// print_piece(data->piece);
-	// print_board_with_piece(data, positions->x, positions->y);
 	dprintf(data->debug_fd, "%d-%d\n", positions->x, positions->y);
 	add_piece_to_board(data, positions);
 	ft_printf("%d %d\n", positions->x, positions->y);

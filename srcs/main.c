@@ -16,8 +16,8 @@ int main(int ac, char **av)
 	data.first_round = 1;
 	data.av = av[0];
 	data.points = NULL;
-	data.log_fd = open("./log", O_WRONLY | O_CREAT | O_TRUNC);
-	data.debug_fd = open("./debug", O_WRONLY | O_CREAT | O_TRUNC);
+	data.log_fd = open("./log", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	data.debug_fd = open("./debug", O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	state = state_first_line;
 
 	while ((get_next_line(0, &s)) > 0)
