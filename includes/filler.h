@@ -25,7 +25,6 @@ typedef struct	s_d
 	int		player_number;
 	char	other_min;
 	char	other_max;
-	char	to_search;
 	char	us_min;
 	char	us_max;
 

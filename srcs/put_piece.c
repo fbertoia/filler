@@ -21,6 +21,22 @@ int		calculate_distance_piece(t_d *data, int x, int y)
 	return (calculate_distance(data, &point));
 }
 
+int		surrounded_by_points(t_d *data, int x, int y)
+{
+	int flag;
+
+	flag = 0;
+	if (x - 1 < 0 || data->board[x - 1][y] == data->us_max || data->board[x - 1][y] == data->other_max)
+		flag++;
+	if (y - 1 < 0 || data->board[x][y - 1 ] == data->us_max  || data->board[x][y - 1] == data->other_max)
+		flag++;
+	if (x + 1 >= data->size_x || data->board[x + 1][y] == data->us_max  || data->board[x + 1][y] == data->other_max)
+		flag++;
+	if (y + 1 >= data->size_y || data->board[x][y + 1] == data->us_max  || data->board[x][y + 1] == data->other_max)
+		flag++;
+	return (!(flag == 4));
+}
+
 int	is_possible_and_distance(t_d *data, int x, int y)
 {
 	int i;
@@ -31,7 +47,7 @@ int	is_possible_and_distance(t_d *data, int x, int y)
 	i = 0;
 	flag = 0;
 	min = -1;
-	print_board_with_piece(data, x, y);
+
 	while (flag >= 0 && i < data->piece_x)
 	{
 		j = 0;
@@ -89,10 +105,10 @@ t_p	*create_pos_list(t_d *data)
 
 	ret = NULL;
 	points = data->points;
-	dprintf(data->debug_fd, "\n\n\n\nnew testing piece\n");
+	// dprintf(data->debug_fd, "\n\n\n\nnew testing piece\n");
 	while (points)
 	{
-		dprintf(data->debug_fd, "testing point at %d-%d\n", points->x, points->y);
+		// dprintf(data->debug_fd, "testing point at %d-%d\n", points->x, points->y);
 		i = 0;
 		while (i < data->piece_x)
 		{
@@ -101,18 +117,18 @@ t_p	*create_pos_list(t_d *data)
 			{
 				if ((distance = is_possible_and_distance(data, points->x - i, points->y - j)))
 				{
-					dprintf(data->debug_fd, "Possible for %d - %d\n", i, j);
+					// dprintf(data->debug_fd, "Possible for %d - %d\n", i, j);
 					create_point(&ret, points->x - i, points->y - j);
 					if (!ret)
 					{
-						dprintf(data->debug_fd, "malloc error\n");
+						// dprintf(data->debug_fd, "malloc error\n");
 						return (NULL);
 					}
 					add_distance(ret, distance);
 				}
 				else
 				{
-					dprintf(data->debug_fd, "Not possible for %d - %d\n", i, j);
+					// dprintf(data->debug_fd, "Not possible for %d - %d\n", i, j);
 				}
 				j++;
 			}
@@ -126,6 +142,36 @@ t_p	*create_pos_list(t_d *data)
 		points = points->next;
 	}
 	return (NULL);
+}
+
+void	purge_points(t_d *data)
+{
+	t_p	*tmp;
+	t_p	*old;
+
+	tmp = data->points;
+	old = NULL;
+	while (tmp)
+	{
+		if (surrounded_by_points(data, tmp->x, tmp->y))
+		{
+			dprintf(data->debug_fd, "Surrounded  x = %d, y = %d.\n", tmp->x, tmp->y);
+			if (old)
+				old->next = tmp->next;
+			else
+				data->points = tmp->next;
+			old = tmp->next;
+			free(tmp);
+			tmp = old;
+		}
+		else
+		{
+			dprintf(data->debug_fd, "Not surrounded x = %d, y = %d.\n", tmp->x, tmp->y);
+		}
+		old = tmp;
+		if (tmp)
+			tmp = tmp->next;
+	}
 }
 
 void	add_piece_to_board(t_d *data, t_p *coords)
@@ -145,6 +191,7 @@ void	add_piece_to_board(t_d *data, t_p *coords)
 		}
 		i++;
 	}
+	// purge_points(data);
 }
 
 int	put_piece(t_d *data)
@@ -154,16 +201,14 @@ int	put_piece(t_d *data)
 	t_p		*positions;
 
 	i = 0;
-	data->to_search = data->other_max;
 	if (data->first_round)
 	{
-		data->to_search = data->other_max;
 		while (data->board[i])
 		{
 			if ((tmp = ft_strchr(data->board[i], data->us_max)))
 				if (!create_point(&(data->points), i, (int)(tmp - data->board[i])))
 				{
-					dprintf(data->debug_fd, "error 0 !\n");
+					// dprintf(data->debug_fd, "error 0 !\n");
 					return (0);
 				}
 			i++;
@@ -174,11 +219,12 @@ int	put_piece(t_d *data)
 	positions = create_pos_list(data);
 	if (!positions)
 	{
-		dprintf(data->debug_fd, "error 1\n");
+		// dprintf(data->debug_fd, "error 1\n");
 		return (0);
 	}
-	dprintf(data->debug_fd, "%d-%d\n", positions->x, positions->y);
+	// dprintf(data->debug_fd, "%d-%d\n", positions->x, positions->y);
 	add_piece_to_board(data, positions);
 	ft_printf("%d %d\n", positions->x, positions->y);
+	// dellist(position);
 	return (1);
 }
