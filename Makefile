@@ -2,11 +2,11 @@ SRC_NAME = main.c \
 			parse_board.c \
 			debug.c \
 			parse_piece.c \
-			delboard.c \
+			delete.c \
 			put_piece.c \
 			sort.c \
 			list.c \
-			create_pos_list.c \
+			list_possible_pieces.c \
 			is_possible.c \
 			distance.c
 

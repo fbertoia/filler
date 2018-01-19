@@ -1,13 +1,13 @@
 #include <filler.h>
 
-void	print_map(char **map)
+void	print_board(char **board)
 {
 	int	i;
 
 	i = 0;
-	while (map[i])
+	while (board[i])
 	{
-		ft_putendl(map[i]);
+		ft_putendl(board[i]);
 		i++;
 	}
 }

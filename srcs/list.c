@@ -1,6 +1,6 @@
 #include <filler.h>
 
-int	create_point(t_p **points, int x, int y)
+int	add_new_point(t_p **points, int x, int y)
 {
 	t_p *tmp;
 
@@ -26,27 +26,33 @@ int	create_point(t_p **points, int x, int y)
 	return (1);
 }
 
-int		us_between(t_d *data, t_p *us, t_p *enemy)
+t_p	*create_point(int x, int y, int distance)
 {
-	int	x;
-	int	y;
-	int maxx;
-	int maxy;
+	t_p	*ret;
 
-	if (us->x != enemy->x && us->y != enemy->y)
-		return (0);
-	x = us->x < enemy->x ? us->x : enemy->x;
-	y = us->y < enemy->y ? us->y : enemy->y;
-	maxx = us->x > enemy->x ? us->x : enemy->x;
-	maxy = us->y > enemy->y ? us->y : enemy->y;
-	while (x < maxx || y < maxy)
+	if (!(ret = (t_p*)malloc(sizeof(t_p))))
+		return (NULL);
+	ret->x = x;
+	ret->y = y;
+	ret->distance = distance;
+	return (ret);
+}
+
+void	add_point(t_p **list, t_p *point)
+{
+	t_p	*tmp;
+	if (!point)
 	{
-		if (data->board[x][y] == data->us_max)
-			return (1);
-		if (x < maxx)
-			x++;
-		if (y < maxy)
-			y++;
+		*list = NULL;
+		return ;
 	}
-	return (0);
+	if (!*list)
+	{
+		*list = point;
+		return ;
+	}
+	tmp = *list;
+	while (tmp->next)
+		tmp = tmp->next;
+	tmp->next = point;
 }

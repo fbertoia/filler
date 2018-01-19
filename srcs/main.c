@@ -36,17 +36,13 @@ int main(int ac, char **av)
 			}
 			if (data.player_number == 1)
 			{
-				data.us_min = 'o';
-				data.us_max = 'O';
-				data.other_min = 'x';
-				data.other_max = 'X';
+				data.ally_char = 'O';
+				data.enemy_char = 'X';
 			}
 			else
 			{
-				data.us_min = 'x';
-				data.us_max = 'X';
-				data.other_min = 'o';
-				data.other_max = 'O';
+				data.ally_char = 'X';
+				data.enemy_char = 'O';
 			}
 			state = state_board;
 		}

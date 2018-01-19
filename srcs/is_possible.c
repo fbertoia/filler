@@ -1,49 +1,45 @@
 #include <filler.h>
 
-int	is_possible_and_distance(t_d *data, int x, int y)
+static int	point_is_possible(t_d *data, int x, int y)
 {
-	int i;
-	int j;
-	int flag;
-	int min;
+	if (x < 0 || y < 0 || x >= data->size_x || y >= data->size_y)
+		return (-1);
+	if (data->board[x][y] == data->enemy_char)
+		return (-1);
+	if (data->board[x][y] == data->ally_char)
+		return (1);
+	return (0);
+}
+
+int			is_possible(t_d *data, int x, int y)
+{
+	int	i;
+	int	j;
+	int	flag;
+	int	tmp;
 
 	i = 0;
 	flag = 0;
-	min = 0;
-	print_board_with_piece(data, x, y);
-	while (flag >= 0 && i < data->piece_x)
+	while (i < data->piece_x)
 	{
 		j = 0;
-		if (data->piece[i][j] == '*' && (y + j >= data->size_y || x + i >= data->size_x || y + j < 0 || x + i < 0))
-			flag = -1;
-		while (flag >= 0 && j < data->piece_y)
+		while (j < data->piece_y)
 		{
-			if (data->piece[i][j] == '*' &&
-				(y + j >= data->size_y || x + i >= data->size_x || y + j < 0 || x + i < 0))
-			{
-				flag = -1;
-				break;
-			}
 			if (data->piece[i][j] == '*')
-				min += calculate_distance_piece(data, x + i, y + j);
-
-			if (x + i >= 0 && y + j >= 0 && x + i < data->size_x && y + j < data->size_y)
 			{
-				if (data->board[x + i][y + j] == data->us_max && data->piece[i][j] == '*')
-				 {
-					 if (flag == 1)
-					 	flag = -1;
-					else
-						flag = 1;
-				 }
-				 else
-				if ((data->board[x + i][y + j] == data->other_min ||
-					data->board[x + i][y + j] == data->other_max) && data->piece[i][j] == '*')
-					flag = -1;
+				tmp = point_is_possible(data, x + i, y + j);
+				if (tmp == -1)
+					return (0);
+				else if (tmp == 1)
+				{
+					flag++;
+					if (flag == 2) // Touche plusieurs fois des points alliés.
+						return (0);
+				}
 			}
 			j++;
 		}
 		i++;
 	}
-	return (flag == 1 ? min : 0);
+	return (flag == 1); // Retourne 0 si on a touche aucune piece alliée.
 }

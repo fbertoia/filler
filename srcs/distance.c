@@ -9,7 +9,7 @@ void	calculate_all_distances(t_d *data, t_p *list) // Calcule les distances de t
 	}
 }
 
-int		calculate_distance_piece(t_d *data, int x, int y)
+int		calculate_distance_wrapper(t_d *data, int x, int y)
 {
 	t_p point;
 
@@ -37,9 +37,6 @@ int		calculate_distance(t_d *data, t_p *point) // Calcule la distance entre un p
 		if (min == -1 || (point->x - tmp->x) * (point->x - tmp->x) + (point->y - tmp->y) * (point->y - tmp->y) < min)
 		{
 			min = (point->x - tmp->x) * (point->x - tmp->x) + (point->y - tmp->y) * (point->y - tmp->y);
-			if (us_between(data, point, tmp))
-				min += 100;
-				min *= min;
 		}
 		tmp = tmp->next;
 	}

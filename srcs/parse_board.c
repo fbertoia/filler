@@ -111,9 +111,9 @@ int				ft_fill_board(t_d *data, char *tmp, int i)
 		if (*tmp != '.' && *tmp != 'o' && *tmp != 'O'
 				&& *tmp != 'x' && *tmp != 'X')
 			return (0);
-		if (*tmp == data->other_max && (data->first_round || data->board[i][j] != *tmp))
+		if (*tmp == data->enemy_char && (data->first_round || data->board[i][j] != *tmp))
 		{
-			create_point(&(data->enemy_points), i, j);
+			add_new_point(&(data->enemy_points), i, j);
 		}
 		(data->board)[i][j] = *tmp;
 		j++;

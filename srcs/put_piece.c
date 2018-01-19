@@ -12,7 +12,7 @@ void	add_piece_to_board(t_d *data, t_p *coords)
 		while (j < data->piece_y)
 		{
 			if (data->piece[i][j] == '*')
-				create_point(&(data->points), coords->x + i, coords->y + j);
+				add_new_point(&(data->points), coords->x + i, coords->y + j);
 			j++;
 		}
 		i++;
@@ -28,9 +28,9 @@ int	init_fist_round(t_d *data)
 	while (data->board[i])
 	{
 		tmp = data->board[i];
-		while ((tmp = ft_strchr(tmp, data->us_max)))
+		while ((tmp = ft_strchr(tmp, data->ally_char)))
 		{
-			if (!create_point(&(data->points), i, (int)(tmp - data->board[i])))
+			if (!add_new_point(&(data->points), i, (int)(tmp - data->board[i])))
 				return (0);
 			tmp++;
 		}
@@ -41,21 +41,22 @@ int	init_fist_round(t_d *data)
 
 int	put_piece(t_d *data)
 {
-	t_p		*positions;
+	t_p		*possibilities;
 
 	if (data->first_round)
 		if (!init_fist_round(data))
 			return (0);
 
-	calculate_all_distances(data);
-	data->points = insert_sort(data->points, func); // On trie tous les points par distance.
+	// calculate_all_distances(data);
+	// data->points = insert_sort(data->points, func); // On trie tous les points par distance.
 
-	positions = create_pos_list(data); // On récupère la liste des pieces posables autour du meilleur point de la liste.
 
-	if (!positions)
-		return (0); // Plus de positions possibles !
+	possibilities = list_possible_pieces(data); // On récupère la liste des pieces posables autour du meilleur point de la liste.
 
-	add_piece_to_board(data, positions);
-	ft_printf("%d %d\n", positions->x, positions->y);
+	if (!possibilities)
+		return (0); // Aucune possibilitée possible !
+
+	add_piece_to_board(data, possibilities);
+	ft_printf("%d %d\n", possibilities->x, possibilities->y);
 	return (1);
 }
