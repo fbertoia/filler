@@ -34,10 +34,7 @@ int		us_between(t_d *data, t_p *us, t_p *enemy)
 	int maxy;
 
 	if (us->x != enemy->x && us->y != enemy->y)
-	{
-		dprintf(data->debug_fd, "non standard position in us_between. returning 0 from %d-%d an %d-%d\n", us->x, us->y, enemy->x, enemy->y);
 		return (0);
-	}
 	x = us->x < enemy->x ? us->x : enemy->x;
 	y = us->y < enemy->y ? us->y : enemy->y;
 	maxx = us->x > enemy->x ? us->x : enemy->x;
@@ -45,23 +42,13 @@ int		us_between(t_d *data, t_p *us, t_p *enemy)
 	while (x < maxx || y < maxy)
 	{
 		if (data->board[x][y] == data->us_max)
-		{
-			dprintf(data->debug_fd, "Our piece was found between %d-%d and %d-%d\n", us->x, us->y, enemy->x, enemy->y);
 			return (1);
-		}
 		if (x < maxx)
 			x++;
 		if (y < maxy)
 			y++;
 	}
-	dprintf(data->debug_fd, "no point found in us_between. returning 0 from %d-%d an %d-%d\n", us->x, us->y, enemy->x, enemy->y);
 	return (0);
-}
-
-int		diagonal_piece(t_d *data, t_p *point, t_p *enemy)
-{
-	int x;
-	int y;
 }
 
 int		calculate_distance

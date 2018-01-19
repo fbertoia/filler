@@ -32,20 +32,16 @@ OBJ_NAME = $(SRC_NAME:.c=.o)
 
 INC = $(addprefix -I,$(INC_PATH))
 
-all : LIB_RULE $(NAME) $(NAME_CH)
-
-$(LCP_NAME) :
-
-LIB_RULE:
-	@mkdir -p $(LIB_DIR)
+all : $(NAME) $(NAME_CH)
 
 $(NAME) : $(OBJ)
+	mkdir -p $(LIB_DIR)
 	make -C libft
 	make -C ft_printf
 	$(CC) $(CFLAGS) $(OBJ) -L $(LIB_DIR) $(LFLAGS) -o $@
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
-	mkdir -p $(OBJ_PATH)
+	@mkdir -p $(OBJ_PATH)
 	$(CC) $(CFLAGS) $(INC) -o $@ -c $<
 
 clean:

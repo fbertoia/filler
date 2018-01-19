@@ -7,6 +7,8 @@ int main(int ac, char **av)
 	t_d		data;
 	int		state;
 
+	if (ac != 1)
+		return (1);
 	data.size_x = -1;
 	data.piece_x = -1;
 	data.size_y = -1;

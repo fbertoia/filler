@@ -19,36 +19,38 @@ void	add_piece_to_board(t_d *data, t_p *coords)
 	}
 }
 
+int	init_fist_round(t_d *data)
+{
+	int		i;
+	char	*tmp;
+	i = 0;
+
+	while (data->board[i])
+	{
+		tmp = data->board[i];
+		while ((tmp = ft_strchr(tmp, data->us_max)))
+		{
+			if (!create_point(&(data->points), i, (int)(tmp - data->board[i])))
+				return (0);
+			tmp++;
+		}
+		i++;
+	}
+	return (1);
+}
+
 int	put_piece(t_d *data)
 {
-	int i;
-	char *tmp;
 	t_p		*positions;
 
-	i = 0;
 	if (data->first_round)
-	{
-		while (data->board[i])
-		{
-			tmp = data->board[i];
-			while ((tmp = ft_strchr(tmp, data->us_max)))
-			{
-				if (!create_point(&(data->points), i, (int)(tmp - data->board[i])))
-				{
-					return (0);
-				}
-				tmp++;
-			}
-			i++;
-		}
-	}
+		if (!init_fist_round(data))
+			return (0);
 	calculate_all_distances(data);
 	data->points = insert_sort(data->points, func);
 	positions = create_pos_list(data);
 	if (!positions)
-	{
 		return (0);
-	}
 	add_piece_to_board(data, positions);
 	ft_printf("%d %d\n", positions->x, positions->y);
 	return (1);
