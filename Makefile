@@ -8,7 +8,8 @@ SRC_NAME = main.c \
 			list.c \
 			list_possible_pieces.c \
 			is_possible.c \
-			distance.c
+			distance.c \
+			maths.c
 
 OBJ_PATH = ./obj/
 

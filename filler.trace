@@ -1,5 +1,2 @@
-seed = 6283
-O: error on input
-./jcamhi.filler won
-Score:
-121AGAINST47
+seed = 8084
+O: timedout

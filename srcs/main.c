@@ -21,7 +21,9 @@ int main(int ac, char **av)
 	data.enemy_points = NULL;
 	data.log_fd = open("./log", O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	data.debug_fd = open("./debug", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	data.target.next = NULL;
 	state = state_first_line;
+	data.nbr_tours = 0;
 
 	while ((get_next_line(0, &s)) > 0)
 	{
@@ -67,6 +69,7 @@ int main(int ac, char **av)
 			data.first_round = 0;
 			state = state_board;
 			dellist(&(data.enemy_points));
+			data.nbr_tours++;
 		}
 		ft_memdel((void**)&s);
 	}

@@ -32,6 +32,8 @@ int	init_fist_round(t_d *data)
 		{
 			if (!add_new_point(&(data->points), i, (int)(tmp - data->board[i])))
 				return (0);
+			data->ally_starting_point.x = i;
+			data->ally_starting_point.y = (int)(tmp - data->board[i]);
 			tmp++;
 		}
 		i++;

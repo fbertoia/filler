@@ -114,6 +114,18 @@ int				ft_fill_board(t_d *data, char *tmp, int i)
 		if (*tmp == data->enemy_char && (data->first_round || data->board[i][j] != *tmp))
 		{
 			add_new_point(&(data->enemy_points), i, j);
+			if (data->first_round)
+			{
+				data->enemy_starting_point.x = i;
+				data->enemy_starting_point.y = j;
+			}
+			data->direction.x = i - data->ally_starting_point.x;
+			data->direction.y = j - data->ally_starting_point.y;
+			normalize_vector(&(data->direction));
+			data->direction.x *= 10;
+			data->direction.y *= 10;
+			data->target.x = i + (int)data->direction.x;
+			data->target.y = j + (int)data->direction.y;
 		}
 		(data->board)[i][j] = *tmp;
 		j++;

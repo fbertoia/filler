@@ -20,6 +20,12 @@ typedef struct s_p
 	int			y;
 }				t_p;
 
+typedef struct s_vec
+{
+	float	x;
+	float	y;
+}				t_vec;
+
 typedef struct	s_d
 {
 	int		player_number;
@@ -38,6 +44,11 @@ typedef struct	s_d
 	int		first_round;
 	int		log_fd;
 	int		debug_fd;
+	t_p		enemy_starting_point;
+	t_p		ally_starting_point;
+	t_p		target;
+	t_vec	direction;
+	int		nbr_tours;
 }				t_d;
 
 typedef struct	s_gen
@@ -76,5 +87,9 @@ int		add_new_point(t_p **points, int x, int y);
 void	add_point(t_p **list, t_p *point);
 
 int		put_piece(t_d *data);
+
+void normalize_vector(t_vec *vector);
+float ft_sqrt(int nbr);
+
 
 #endif
