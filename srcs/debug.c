@@ -52,15 +52,21 @@ void	print_board_with_piece(t_d *data, int x, int y)
 			if (j >= y && j < y + data->piece_y && i >= x && i < x + data->piece_x)
 			{
 				if (data->piece[i - x][j - y] == '*')
-					dprintf(data->debug_fd, "*");
+				{
+					// dprintf(data->debug_fd, "*");
+				}
 				else
-					dprintf(data->debug_fd, "%c", data->board[i][j]);
+				{
+					// dprintf(data->debug_fd, "%c", data->board[i][j]);
+				}
 			}
 			else
-				dprintf(data->debug_fd, "%c", data->board[i][j]);
+			{
+				// dprintf(data->debug_fd, "%c", data->board[i][j]);
+			}
 			j++;
 		}
-		dprintf(data->debug_fd, "\n");
+		// dprintf(data->debug_fd, "\n");
 		i++;
 	}
 }

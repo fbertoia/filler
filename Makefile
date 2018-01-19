@@ -5,7 +5,9 @@ SRC_NAME = main.c \
 			delboard.c \
 			put_piece.c \
 			sort.c \
-			list.c
+			list.c \
+			create_pos_list.c \
+			is_possible.c
 
 OBJ_PATH = ./obj/
 

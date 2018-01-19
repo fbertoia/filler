@@ -67,6 +67,7 @@ void	print_list(t_p *list);
 void	print_board_with_piece(t_d *data, int x, int y);
 int		create_point(t_p **points, int x, int y);
 int		calculate_distance(t_d *data, t_p *point);
-
+int	is_possible_and_distance(t_d *data, int x, int y);
+t_p	*create_pos_list(t_d *data);
 
 #endif
