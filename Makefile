@@ -7,7 +7,8 @@ SRC_NAME = main.c \
 			sort.c \
 			list.c \
 			create_pos_list.c \
-			is_possible.c
+			is_possible.c \
+			distance.c
 
 OBJ_PATH = ./obj/
 

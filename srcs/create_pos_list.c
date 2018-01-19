@@ -22,23 +22,15 @@ t_p	*create_pos_list(t_d *data)
 				{
 					create_point(&ret, points->x - i, points->y - j);
 					if (!ret)
-					{
 						return (NULL);
-					}
 					add_distance(ret, distance);
-				}
-				else
-				{
 				}
 				j++;
 			}
 			i++;
 		}
 		if (ret)
-		{
-			ret = insert_sort(ret, func);
-			return (ret);
-		}
+			return (insert_sort(ret, func));
 		points = points->next;
 	}
 	return (NULL);

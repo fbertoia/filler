@@ -70,4 +70,10 @@ int		calculate_distance(t_d *data, t_p *point);
 int	is_possible_and_distance(t_d *data, int x, int y);
 t_p	*create_pos_list(t_d *data);
 
+void	calculate_all_distances(t_d *data);
+int		calculate_distance_piece(t_d *data, int x, int y);
+void	add_distance(t_p *ret, int distance);
+
+int		is_surrounded_by_points(t_d *data, int x, int y);
+
 #endif
