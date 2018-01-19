@@ -1,14 +1,11 @@
 #include <filler.h>
 
-void	calculate_all_distances(t_d *data)
+void	calculate_all_distances(t_d *data, t_p *list) // Calcule les distances de tous les points allies par rapport à tous les points ennemis.
 {
-	t_p	*tmp;
-
-	tmp = data->points;
-	while (tmp)
+	while (list)
 	{
-		tmp->distance =	calculate_distance(data, tmp);
-		tmp = tmp->next;
+		list->distance =	calculate_distance(data, list);
+		list = list->next;
 	}
 }
 
@@ -28,3 +25,23 @@ void	add_distance(t_p *ret, int distance)
 	ret->distance = distance;
 }
 
+int		calculate_distance(t_d *data, t_p *point) // Calcule la distance entre un point et tous les points ennemis.
+{
+	int	min;
+	t_p	*tmp;
+
+	tmp = data->enemy_points;
+	min = -1;
+	while (tmp)
+	{
+		if (min == -1 || (point->x - tmp->x) * (point->x - tmp->x) + (point->y - tmp->y) * (point->y - tmp->y) < min)
+		{
+			min = (point->x - tmp->x) * (point->x - tmp->x) + (point->y - tmp->y) * (point->y - tmp->y);
+			if (us_between(data, point, tmp))
+				min += 100;
+				min *= min;
+		}
+		tmp = tmp->next;
+	}
+	return (min);
+}

@@ -50,25 +50,3 @@ int		us_between(t_d *data, t_p *us, t_p *enemy)
 	}
 	return (0);
 }
-
-int		calculate_distance
-(t_d *data, t_p *point)
-{
-	int	min;
-	t_p	*tmp;
-
-	tmp = data->enemy_points;
-	min = -1;
-	while (tmp)
-	{
-		if (min == -1 || (point->x - tmp->x) * (point->x - tmp->x) + (point->y - tmp->y) * (point->y - tmp->y) < min)
-		{
-			min = (point->x - tmp->x) * (point->x - tmp->x) + (point->y - tmp->y) * (point->y - tmp->y);
-			if (us_between(data, point, tmp))
-				min += 100;
-				min *= min;
-		}
-		tmp = tmp->next;
-	}
-	return (min);
-}

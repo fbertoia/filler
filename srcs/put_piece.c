@@ -46,11 +46,15 @@ int	put_piece(t_d *data)
 	if (data->first_round)
 		if (!init_fist_round(data))
 			return (0);
+
 	calculate_all_distances(data);
-	data->points = insert_sort(data->points, func);
-	positions = create_pos_list(data);
+	data->points = insert_sort(data->points, func); // On trie tous les points par distance.
+
+	positions = create_pos_list(data); // On récupère la liste des pieces posables autour du meilleur point de la liste.
+
 	if (!positions)
-		return (0);
+		return (0); // Plus de positions possibles !
+
 	add_piece_to_board(data, positions);
 	ft_printf("%d %d\n", positions->x, positions->y);
 	return (1);

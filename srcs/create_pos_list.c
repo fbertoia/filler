@@ -10,15 +10,15 @@ t_p	*create_pos_list(t_d *data)
 
 	ret = NULL;
 	points = data->points;
-	while (points)
+	while (points) // Itère sur tous les points.
 	{
 		i = 0;
 		while (i < data->piece_x)
 		{
 			j = 0;
-			while(j < data->piece_y)
+			while(j < data->piece_y) // Pour toutes les positions possibles de la pièce par rapport a ce point...
 			{
-				if ((distance = is_possible_and_distance(data, points->x - i, points->y - j)))
+				if ((distance = is_possible_and_distance(data, points->x - i, points->y - j))) // On rajoute les positions possibles dans notre liste ret.
 				{
 					create_point(&ret, points->x - i, points->y - j);
 					if (!ret)
@@ -30,7 +30,7 @@ t_p	*create_pos_list(t_d *data)
 			i++;
 		}
 		if (ret)
-			return (insert_sort(ret, func));
+			return (insert_sort(ret, func)); // Et on renvoie les positions possibles triées de la première pièce possiblement posée.
 		points = points->next;
 	}
 	return (NULL);
