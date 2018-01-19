@@ -35,6 +35,7 @@ t_p	*create_point(int x, int y, int distance)
 	ret->x = x;
 	ret->y = y;
 	ret->distance = distance;
+	ret->next = NULL;
 	return (ret);
 }
 
@@ -46,7 +47,7 @@ void	add_point(t_p **list, t_p *point)
 		*list = NULL;
 		return ;
 	}
-	if (!*list)
+	if (!(*list))
 	{
 		*list = point;
 		return ;

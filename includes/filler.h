@@ -68,10 +68,8 @@ int		is_possible(t_d *data, int x, int y);
 
 t_p	*list_possible_pieces(t_d *data);
 
-void	calculate_all_distances(t_d *data, t_p *list);
-int		calculate_distance_wrapper(t_d *data, int x, int y);
-void	add_distance(t_p *ret, int distance);
-int		calculate_distance(t_d *data, t_p *point);
+int		calculate_distance_piece(t_d *data, int x, int y, t_p *objectives);
+int		calculate_distance(t_p *point, t_p *objectives);
 
 t_p		*create_point(int x, int y, int distance);
 int		add_new_point(t_p **points, int x, int y);

@@ -303,7 +303,6 @@ class Player
 	def end_player(trace)
 		if (self.live > 0)
 			self.live = 0
-			 puts("#{self.file_name}: died :(\n")
 			if self.stdin != STDOUT
 				self.stdin.close
 				@stdout.close
