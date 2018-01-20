@@ -1,5 +1,13 @@
 #include <filler.h>
 
+
+int get_coord_board(int val, int max)
+{
+	if (val < 0)
+		val = max - (val % (-1 * max));
+	return (val % max);
+}
+
 void normalize_vector(t_vec *vec)
 {
 	float	norme;

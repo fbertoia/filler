@@ -1,9 +1,10 @@
 #include <filler.h>
 
+
 static int	point_is_possible(t_d *data, int x, int y)
 {
-	if (x < 0 || y < 0 || x >= data->size_x || y >= data->size_y)
-		return (-1);
+	x = get_coord_board(x, data->size_x);
+	y = get_coord_board(y, data->size_y);
 	if (data->board[x][y] == data->enemy_char)
 		return (-1);
 	if (data->board[x][y] == data->ally_char)

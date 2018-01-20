@@ -92,6 +92,8 @@ int		put_piece(t_d *data);
 
 void normalize_vector(t_vec *vector);
 float ft_sqrt(int nbr);
+int get_coord_board(int val, int max);
+
 int		func_bis(void *a, void *b);
 int		calculate_proximity(t_p *point, t_d *data);
 int		calculate_cross(t_d *data, int x, int y);

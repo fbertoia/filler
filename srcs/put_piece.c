@@ -12,7 +12,7 @@ void	add_piece_to_board(t_d *data, t_p *coords)
 		while (j < data->piece_y)
 		{
 			if (data->piece[i][j] == '*')
-				add_new_point(&(data->points), coords->x + i, coords->y + j);
+				add_new_point(&(data->points), get_coord_board(coords->x + i, data->size_x), get_coord_board(coords->y + j, data->size_y));
 			j++;
 		}
 		i++;

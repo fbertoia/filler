@@ -154,7 +154,7 @@ static int		parse_board_other(t_d *data)
 	line = NULL;
 	while (i < data->size_x && (k = get_next_line(0, &line)) > 0)
 	{
-		// dprintf(data->log_fd, "%s\n", line);
+		dprintf(data->log_fd, "%s\n", line);
 		if (ft_atoi(line) != i)
 			return (-1);
 		if ((tmp = ft_strchr(line, ' ')) == NULL)

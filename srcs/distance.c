@@ -18,8 +18,8 @@ int		calculate_distance_piece(t_d *data, int x, int y)
 		{
 			if (data->piece[i][j] == '*')
 			{
-				point.x = x + i;
-				point.y = y + j;
+				point.x = get_coord_board(x + i, data->size_x);
+				point.y = get_coord_board(y + j, data->size_;
 				ret_prox += calculate_proximity(&point, data);
 				ret += calculate_distance(&point, data->enemy_points);
 			}
@@ -27,8 +27,6 @@ int		calculate_distance_piece(t_d *data, int x, int y)
 		}
 		i++;
 	}
-	// if (calculate_cross(data, x, y))
-	// 	return (INT_MIN);
 	return (ret_prox < 0 ? ret_prox : ret);
 }
 
@@ -100,12 +98,12 @@ int		calculate_cross(t_d *data, int x, int y)
 				if (check_frontiers_board(data->size_x, data->size_y, x + i + 1, y + j) && (data->board[x + i + 1][y + j] == data->enemy_char))
 					if (check_frontiers_board(data->size_x, data->size_y, x + i, y + j + 1) && (data->board[x + i][y + j + 1] == data->enemy_char))
 						if (check_frontiers_board(data->piece_x, data->piece_y, i + 1, j + 1) && (data->piece[i + 1][j + 1] == '*'))
-							return (INT_MIN);
+							return (1);
 			if (check_frontiers_board(data->size_x, data->size_y, x + i, y + j) && (data->board[x + i][y + j] == data->enemy_char))
 				if (check_frontiers_board(data->piece_x, data->piece_y, i + 1, j) && (data->piece[i + 1][j] == '*'))
 					if (check_frontiers_board(data->piece_x, data->piece_y, i, j + 1) && (data->piece[i][j + 1] == '*'))
 						if (check_frontiers_board(data->size_x, data->size_y, x + i + 1, y + j + 1) && (data->board[x + i + 1][y + j + 1] == data->enemy_char))
-							return (INT_MIN);
+							return (1);
 			j++;
 		}
 		i++;
