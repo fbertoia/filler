@@ -101,11 +101,24 @@ int				ft_create_board(t_d *data)
 	return (1);
 }
 
+void			apply_vector(t_p starting_point, t_p end_point, t_d *data, int coef)
+{
+			data->direction.x = end_point.x - starting_point.x;
+			data->direction.y = end_point.y - starting_point.y;
+			normalize_vector(&(data->direction));
+			data->direction.x *= coef;
+			data->direction.y *= coef;
+			data->target.x = end_point.x + (int)data->direction.x;
+			data->target.y = end_point.y + (int)data->direction.y;
+}
+
 int				ft_fill_board(t_d *data, char *tmp, int i)
 {
 	int j;
+	int flag;
 
 	j = 0;
+	flag = 0;
 	while (j < data->size_y && *tmp)
 	{
 		if (*tmp != '.' && *tmp != 'o' && *tmp != 'O'
@@ -119,13 +132,6 @@ int				ft_fill_board(t_d *data, char *tmp, int i)
 				data->enemy_starting_point.x = i;
 				data->enemy_starting_point.y = j;
 			}
-			data->direction.x = i - data->ally_starting_point.x;
-			data->direction.y = j - data->ally_starting_point.y;
-			normalize_vector(&(data->direction));
-			data->direction.x *= 10;
-			data->direction.y *= 10;
-			data->target.x = i + (int)data->direction.x;
-			data->target.y = j + (int)data->direction.y;
 		}
 		(data->board)[i][j] = *tmp;
 		j++;
@@ -148,7 +154,7 @@ static int		parse_board_other(t_d *data)
 	line = NULL;
 	while (i < data->size_x && (k = get_next_line(0, &line)) > 0)
 	{
-		dprintf(data->log_fd, "%s\n", line);
+		// dprintf(data->log_fd, "%s\n", line);
 		if (ft_atoi(line) != i)
 			return (-1);
 		if ((tmp = ft_strchr(line, ' ')) == NULL)

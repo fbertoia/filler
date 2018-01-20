@@ -24,7 +24,6 @@ int main(int ac, char **av)
 	data.target.next = NULL;
 	state = state_first_line;
 	data.nbr_tours = 0;
-
 	while ((get_next_line(0, &s)) > 0)
 	{
 		dprintf(data.log_fd, "%s\n", s);

@@ -4,6 +4,7 @@
 # include <libft.h>
 # include <stdio.h>
 # include <ft_printf.h>
+# include <limits.h>
 
 enum e_flag
 {
@@ -48,6 +49,7 @@ typedef struct	s_d
 	t_p		ally_starting_point;
 	t_p		target;
 	t_vec	direction;
+	int		strategy;
 	int		nbr_tours;
 }				t_d;
 
@@ -79,8 +81,8 @@ int		is_possible(t_d *data, int x, int y);
 
 t_p	*list_possible_pieces(t_d *data);
 
-int		calculate_distance_piece(t_d *data, int x, int y, t_p *objectives);
-int		calculate_distance(t_p *point, t_p *objectives);
+int		calculate_distance_piece(t_d *data, int x, int y);
+int		calculate_distance(t_p *point, t_p *target);
 
 t_p		*create_point(int x, int y, int distance);
 int		add_new_point(t_p **points, int x, int y);
@@ -90,6 +92,9 @@ int		put_piece(t_d *data);
 
 void normalize_vector(t_vec *vector);
 float ft_sqrt(int nbr);
+int		func_bis(void *a, void *b);
+int		calculate_proximity(t_p *point, t_d *data);
+int		calculate_cross(t_d *data, int x, int y);
 
 
 #endif

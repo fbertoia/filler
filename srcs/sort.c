@@ -1,5 +1,15 @@
 #include <filler.h>
 
+int		func_bis(void *a, void *b)
+{
+	t_p	*l1;
+	t_p	*l2;
+
+	l1 = (t_p*)a;
+	l2 = (t_p*)b;
+	return (l1->distance - l2->distance);
+}
+
 int		func(void *a, void *b)
 {
 	t_p	*l1;

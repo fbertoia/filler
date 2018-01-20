@@ -15,17 +15,29 @@ float ft_sqrt(int nbr)
 
 	i = 0;
 	dprintf(4, "entered.\n");
+	if (!i)
+		return (0);
 	while (42)
 	{
-		dprintf(4, "in boucle\n");
+		dprintf(4, "in boucle----\n");
 		if (i * i > nbr)
 		{
+			dprintf(4, "%f, %d\n", i, nbr);
 			while (i * i > nbr)
-				i -= 0.1;
+			{
+				dprintf(4, "%f, %d\n", i, nbr);
+						i -= 0.1;
+			}
 			while (i * i > nbr)
+			{
+				dprintf(4, "%f, %d\n", i, nbr);
 				i -= 0.01;
+			}
 			while (i * i > nbr)
+			{
+				dprintf(4, "%f, %d\n", i, nbr);
 				i -= 0.001;
+			}
 			dprintf(4, "returned\n");
 			return (i);
 		}
