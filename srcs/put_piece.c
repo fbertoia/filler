@@ -19,7 +19,7 @@ void	add_piece_to_board(t_d *data, t_p *coords)
 	}
 }
 
-int	init_fist_round(t_d *data)
+int		init_fist_round(t_d *data)
 {
 	int		i;
 	char	*tmp;
@@ -46,7 +46,7 @@ int	init_fist_round(t_d *data)
 	return (1);
 }
 
-int	touched_piece(t_d *data, t_p *position)
+int		touched_piece(t_d *data, t_p *position)
 {
 	int	i;
 	int	j;
@@ -72,7 +72,7 @@ int	touched_piece(t_d *data, t_p *position)
 	return (0);
 }
 
-int	put_piece(t_d *data)
+int		put_piece(t_d *data)
 {
 	t_p		*possibilities;
 
