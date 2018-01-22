@@ -7,10 +7,10 @@ int		delpiece(t_d *data)
 	i = 0;
 	while(i < data->piece_x)
 	{
-		ft_memdel((void**)&(data->piece)[i]);
+		free(data->piece[i]);
 		i++;
 	}
-	ft_memdel((void**)(&data->piece));
+	free(data->piece);
 	return (1);
 }
 

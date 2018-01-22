@@ -51,11 +51,8 @@ int main(int ac, char **av)
 		else if (state == state_board)
 		{
 			if (parse_board(s, &data) <= 0)
-			{
 				return (2);
-			}
 			state = state_piece;
-			// print_list(data.enemy_points);
 		}
 		else if (state == state_piece)
 		{
@@ -64,13 +61,15 @@ int main(int ac, char **av)
 			if (!put_piece(&data))
 			{
 				delboard(&data);
+				delpiece(&data);
 				ft_memdel((void**)&s);
-				// while(1);
+				dellist(&(data.points));
+				while(1);
 				return (4);
 			}
+			delpiece(&data);
 			data.piece_x = -1;
 			data.piece_y = -1;
-			delpiece(&data);
 			data.first_round = 0;
 			state = state_board;
 			dellist(&(data.enemy_points));

@@ -94,5 +94,6 @@ int	put_piece(t_d *data)
 	ft_putchar(' ');
 	ft_putnbr(possibilities->y);
 	ft_putchar('\n');
+	dellist(&possibilities);
 	return (1);
 }
