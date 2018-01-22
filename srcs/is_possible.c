@@ -31,11 +31,8 @@ int			is_possible(t_d *data, int x, int y)
 				if (tmp == -1)
 					return (0);
 				else if (tmp == 1)
-				{
-					flag++;
-					if (flag == 2)
+					if (++flag == 2)
 						return (0);
-				}
 			}
 		}
 	}

@@ -40,7 +40,6 @@ void	dellist(t_p **list)
 	}
 }
 
-
 int		par(int ret, char *str)
 {
 	ft_putstr(str);
