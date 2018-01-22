@@ -1,6 +1,5 @@
 #include <filler.h>
 
-
 static int		pieces_ok(char **board)
 {
 	void	*o;
@@ -64,7 +63,7 @@ int				cmp(char *line, int *i, char c)
 	return (1);
 }
 
-int		parse_board_line(char *line, t_d *data)
+int				parse_board_line(char *line, t_d *data)
 {
 	int		size_x;
 	int		size_y;
