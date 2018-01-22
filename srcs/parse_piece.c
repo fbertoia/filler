@@ -84,7 +84,7 @@ static int		parse_piece_other(t_d *data)
 	return (1);
 }
 
-int					parse_piece(char *line, t_d *data)
+int				parse_piece(char *line, t_d *data)
 {
 	int		i;
 
