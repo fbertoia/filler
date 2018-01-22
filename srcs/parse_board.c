@@ -77,7 +77,7 @@ int				ft_fill_board(t_d *data, char *tmp, int i)
 	return (1);
 }
 
-int			parse_board_other(t_d *data)
+int				parse_board_other(t_d *data)
 {
 	char	*line;
 	int		i;
