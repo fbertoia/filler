@@ -23,8 +23,8 @@ int	init_fist_round(t_d *data)
 {
 	int		i;
 	char	*tmp;
-	i = 0;
 
+	i = 0;
 	while (data->board[i])
 	{
 		tmp = data->board[i];
@@ -34,9 +34,11 @@ int	init_fist_round(t_d *data)
 				return (0);
 			data->ally_starting_point.x = i;
 			data->ally_starting_point.y = (int)(tmp - data->board[i]);
-			if (data->size_x > 20 || data->size_y > 20 || data->ally_starting_point.x < data->enemy_starting_point.x)
+			if (data->size_x > 20 || data->size_y > 20 ||
+				data->ally_starting_point.x < data->enemy_starting_point.x)
+			{
 				data->touched_enemy = 1;
-			dprintf(data->debug_fd, "us : %d, enemy : %d\n", data->ally_starting_point.x, data->enemy_starting_point.x);
+			}
 			tmp++;
 		}
 		i++;
@@ -77,16 +79,9 @@ int	put_piece(t_d *data)
 	if (data->first_round)
 		if (!init_fist_round(data))
 			return (0);
-
-	// calculate_all_distances(data);
-	// data->points = insert_sort(data->points, func); // On trie tous les points par distance.
-
-
-	possibilities = list_possible_pieces(data); // On récupère la liste des pieces posables autour du meilleur point de la liste.
-
+	possibilities = list_possible_pieces(data);
 	if (!possibilities)
-		return (0); // Aucune possibilitée possible !
-
+		return (0);
 	if (touched_piece(data, possibilities))
 		data->touched_enemy = 1;
 	add_piece_to_board(data, possibilities);

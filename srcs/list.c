@@ -1,6 +1,6 @@
 #include <filler.h>
 
-int	add_new_point(t_p **points, int x, int y)
+int			add_new_point(t_p **points, int x, int y)
 {
 	t_p *tmp;
 
@@ -26,7 +26,7 @@ int	add_new_point(t_p **points, int x, int y)
 	return (1);
 }
 
-t_p	*create_point(int x, int y, int distance)
+t_p			*create_point(int x, int y, int distance)
 {
 	t_p	*ret;
 
@@ -39,9 +39,10 @@ t_p	*create_point(int x, int y, int distance)
 	return (ret);
 }
 
-void	add_point(t_p **list, t_p *point)
+void		add_point(t_p **list, t_p *point)
 {
 	t_p	*tmp;
+
 	if (!point)
 	{
 		*list = NULL;

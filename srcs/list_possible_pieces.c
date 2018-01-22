@@ -15,7 +15,8 @@ t_p	*list_possible_pieces(t_d *data)
 		{
 			if (is_possible(data, x, y))
 			{
-				add_point(&possibilities, create_point(x, y, calculate_distance_piece(data, x, y)));
+				add_point(&possibilities, create_point(x, y,
+					calculate_distance_piece(data, x, y)));
 				if (!possibilities)
 					return (NULL);
 			}

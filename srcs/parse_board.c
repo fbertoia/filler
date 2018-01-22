@@ -1,58 +1,5 @@
 #include <filler.h>
 
-int				parse_first_line(char *line, char *av)
-{
-	if (!ft_strnequ("$$$ exec p", line, 10))
-		return (-1);
-	if (line[10] != '1' && line[10] != '2')
-		return (-2);
-	if (!ft_strnequ(" : [", line + 11, sizeof(" : [") - 1))
-		return (-3);
-	if (!ft_strnequ(line + 15, av, ft_strlen(av)))
-		return (-4);
-	if (!ft_strequ(line + 15 + ft_strlen(av), "]"))
-		return (-5);
-	return (line[10] - '0');
-}
-
-int				cmp(char *line, int *i, char c)
-{
-	while (line[*i] && line[*i] != c)
-	{
-		if (!ft_isdigit(line[*i]))
-			return (0);
-		(*i)++;
-	}
-	return (1);
-}
-
-static int		parse_board_line(char *line, t_d *data)
-{
-	int		size_x;
-	int		size_y;
-	int		i;
-
-	if (!ft_strnequ(line, "Plateau ", 8))
-		return (-1);
-	size_x = ft_atoi(line + 8);
-	i = 8;
-	if (!cmp(line, &i, ' '))
-		return (-2);
-	i++;
-	size_y = ft_atoi(line + i);
-	if (!cmp(line, &i, ':'))
-		return (-3);
-	if (line[i] != ':' || line[i + 1] != '\0')
-		return (-4);
-	if (size_x <= 0 || size_y <= 0 || ((data->size_x != -1 ||
-		data->size_y != -1) && (data->size_x != size_x
-			|| data->size_y != size_y)))
-		return (-5);
-	data->size_x = size_x;
-	data->size_y = size_y;
-	return (1);
-}
-
 static int		parse_board_second_line(char *line, t_d *data)
 {
 	char	c;
@@ -101,17 +48,6 @@ int				ft_create_board(t_d *data)
 	return (1);
 }
 
-void			apply_vector(t_p starting_point, t_p end_point, t_d *data, int coef)
-{
-			data->direction.x = end_point.x - starting_point.x;
-			data->direction.y = end_point.y - starting_point.y;
-			normalize_vector(&(data->direction));
-			data->direction.x *= coef;
-			data->direction.y *= coef;
-			data->target.x = end_point.x + (int)data->direction.x;
-			data->target.y = end_point.y + (int)data->direction.y;
-}
-
 int				ft_fill_board(t_d *data, char *tmp, int i)
 {
 	int j;
@@ -124,14 +60,12 @@ int				ft_fill_board(t_d *data, char *tmp, int i)
 		if (*tmp != '.' && *tmp != 'o' && *tmp != 'O'
 				&& *tmp != 'x' && *tmp != 'X')
 			return (0);
-		if (*tmp == data->enemy_char && (data->first_round || data->board[i][j] != *tmp))
+		if (*tmp == data->enemy_char && (data->first_round ||
+			data->board[i][j] != *tmp))
 		{
 			add_new_point(&(data->enemy_points), i, j);
 			if (data->first_round)
-			{
-				data->enemy_starting_point.x = i;
-				data->enemy_starting_point.y = j;
-			}
+				data->enemy_starting_point = (t_p){NULL, 0, i, j};
 		}
 		(data->board)[i][j] = *tmp;
 		j++;
@@ -143,7 +77,7 @@ int				ft_fill_board(t_d *data, char *tmp, int i)
 	return (1);
 }
 
-static int		parse_board_other(t_d *data)
+int			parse_board_other(t_d *data)
 {
 	char	*line;
 	int		i;
@@ -154,7 +88,6 @@ static int		parse_board_other(t_d *data)
 	line = NULL;
 	while (i < data->size_x && (k = get_next_line(0, &line)) > 0)
 	{
-		dprintf(data->log_fd, "%s\n", line);
 		if (ft_atoi(line) != i)
 			return (-1);
 		if ((tmp = ft_strchr(line, ' ')) == NULL)
@@ -171,43 +104,6 @@ static int		parse_board_other(t_d *data)
 	return (1);
 }
 
-static int		pieces_ok(char **board)
-{
-	void	*o;
-	void	*x;
-	int		i;
-
-	o = NULL;
-	x = NULL;
-	i = 0;
-	while (board[i])
-	{
-		if (!o)
-			o = ft_strchr(board[i], 'O');
-		if (!x)
-			x = ft_strchr(board[i], 'X');
-		i++;
-	}
-	if (!o || !x)
-		return (0);
-	return (1);
-}
-
-int				parse_2(t_d *data)
-{
-	if (parse_board_other(data) < 0)
-	{
-		ft_printf("Error: Board line error.\n");
-		return (-5);
-	}
-	if (!pieces_ok(data->board))
-	{
-		ft_printf("Error: No pieces on board.\n");
-		return (-6);
-	}
-	return (1);
-}
-
 int				parse_board(char *line, t_d *data)
 {
 	char	*l2;
@@ -216,26 +112,19 @@ int				parse_board(char *line, t_d *data)
 	i = 0;
 	l2 = NULL;
 	if ((i = parse_board_line(line, data)) < 0)
-	{
-		ft_printf("Error: First board line not ok.\n");
-		return (-1);
-	}
+		return (par(-1, "Error: First board line not ok.\n"));
 	if (data->first_round)
-	{
 		if (!ft_create_board(data))
 		{
 			perror(data->av);
 			return (-2);
 		}
-	}
 	if (get_next_line(0, &l2) <= 0)
 		return (-3);
-	dprintf(data->log_fd, "%s\n", l2);
 	if ((i = parse_board_second_line(l2, data)) < 0)
 	{
-		ft_printf("Error: Second board line not ok. i = %d\n", i);
 		ft_memdel((void**)&l2);
-		return (-4);
+		return (par(-4, "Error: Second board line not ok.\n"));
 	}
 	ft_memdel((void**)&l2);
 	if (parse_2(data) < 0)

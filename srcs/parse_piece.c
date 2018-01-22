@@ -91,7 +91,7 @@ int					parse_piece(char *line, t_d *data)
 	i = 0;
 	if (parse_piece_line(line, data) < 0)
 	{
-		ft_printf("Error: First piece line not ok.\n");
+		ft_putstr("Error: First piece line not ok.\n");
 		return (-1);
 	}
 	if (!ft_create_piece(data))
@@ -101,7 +101,7 @@ int					parse_piece(char *line, t_d *data)
 	}
 	if ((i = parse_piece_other(data)) < 0)
 	{
-		ft_printf("Error: Second piece line not ok.");
+		ft_putstr("Error: Second piece line not ok.\n");
 		return (-4);
 	}
 	return (1);

@@ -1,6 +1,5 @@
 SRC_NAME = main.c \
 			parse_board.c \
-			debug.c \
 			parse_piece.c \
 			delete.c \
 			put_piece.c \
@@ -9,11 +8,12 @@ SRC_NAME = main.c \
 			list_possible_pieces.c \
 			is_possible.c \
 			distance.c \
-			maths.c
+			proximity.c \
+			parse_board_2.c
 
 OBJ_PATH = ./obj/
 
-INC_PATH = ./includes ./libft/includes ./ft_printf/includes
+INC_PATH = ./includes ./libft/includes
 
 SRC_PATH = ./srcs/
 
@@ -22,7 +22,7 @@ NAME = jcamhi.filler
 CC = gcc
 # CFLAGS =  -Wextra -Wall -g
 CFLAGS =  -Wextra -Wall -g
-LFLAGS = -lft -lftprintf
+LFLAGS = -lft
 LIB_DIR=./lib/
 
 OBJ_NAME = $(SRC_NAME:.c=.o)
@@ -38,7 +38,6 @@ all : $(NAME) $(NAME_CH)
 $(NAME) : $(OBJ)
 	mkdir -p $(LIB_DIR)
 	make -C libft
-	make -C ft_printf
 	$(CC) $(CFLAGS) $(OBJ) -L $(LIB_DIR) $(LFLAGS) -o $@
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
@@ -49,12 +48,10 @@ clean:
 	@rm -fv $(OBJ)
 	@rmdir -p $(OBJ_PATH) 2> /dev/null || true
 	@make -C libft clean
-	@make -C ft_printf clean
 
 fclean: clean
 	@rm -fv $(NAME)
 	@make -C libft fclean
-	@make -C ft_printf fclean
 	@rmdir lib 2> /dev/null || true
 
 re: fclean all

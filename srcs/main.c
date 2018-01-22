@@ -64,7 +64,6 @@ int main(int ac, char **av)
 				delpiece(&data);
 				ft_memdel((void**)&s);
 				dellist(&(data.points));
-				while(1);
 				return (4);
 			}
 			delpiece(&data);

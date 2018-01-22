@@ -18,12 +18,12 @@ int			is_possible(t_d *data, int x, int y)
 	int	flag;
 	int	tmp;
 
-	i = 0;
+	i = -1;
 	flag = 0;
-	while (i < data->piece_x)
+	while (++i < data->piece_x)
 	{
-		j = 0;
-		while (j < data->piece_y)
+		j = -1;
+		while (++j < data->piece_y)
 		{
 			if (data->piece[i][j] == '*')
 			{
@@ -33,13 +33,11 @@ int			is_possible(t_d *data, int x, int y)
 				else if (tmp == 1)
 				{
 					flag++;
-					if (flag == 2) // Touche plusieurs fois des points alliés.
+					if (flag == 2)
 						return (0);
 				}
 			}
-			j++;
 		}
-		i++;
 	}
-	return (flag == 1); // Retourne 0 si on a touche aucune piece alliée.
+	return (flag == 1);
 }

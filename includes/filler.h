@@ -3,7 +3,6 @@
 
 # include <libft.h>
 # include <stdio.h>
-# include <ft_printf.h>
 # include <limits.h>
 
 enum e_flag
@@ -48,7 +47,6 @@ typedef struct	s_d
 	t_p		enemy_starting_point;
 	t_p		ally_starting_point;
 	t_p		target;
-	t_vec	direction;
 	int		strategy;
 	int		nbr_tours;
 	int		touched_enemy;
@@ -69,6 +67,7 @@ int		cmp(char *line, int *i, char c);
 int		delboard(t_d *data);
 int		delpiece(t_d *data);
 void	dellist(t_p **list);
+int		par(int ret, char *str);
 
 void		*insert_sort(void *list, t_func comp);
 int			func(void *a, void *b);
@@ -91,13 +90,16 @@ void	add_point(t_p **list, t_p *point);
 
 int		put_piece(t_d *data);
 
-void normalize_vector(t_vec *vector);
-float ft_sqrt(int nbr);
 int get_coord_board(int val, int max);
 
 int		func_bis(void *a, void *b);
 int		calculate_proximity(t_p *point, t_d *data);
 int		calculate_cross(t_d *data, int x, int y);
 
+int				calculate_proximity(t_p *point, t_d *data);
+
+int				parse_2(t_d *data);
+int		parse_board_line(char *line, t_d *data);
+int			parse_board_other(t_d *data);
 
 #endif
