@@ -1,5 +1,37 @@
 #include <filler.h>
 
+int calculate_distance_top(t_d *data, int x, int y)
+{
+	t_p point;
+	int	i;
+	int	j;
+	int	ret;
+	t_p	top;
+
+	top.y = data->ally_starting_point.y;
+	top.x = 0;
+	top.next = NULL;
+
+	i = 0;
+	ret = 0;
+	while (i < data->piece_x)
+	{
+		j = 0;
+		while (j < data->piece_y)
+		{
+			if (data->piece[i][j] == '*')
+			{
+				point.x = x + i;
+				point.y = y + j;
+				ret += calculate_distance(&point, &top);
+			}
+			j++;
+		}
+		i++;
+	}
+	return (ret);
+}
+
 int		calculate_distance_piece(t_d *data, int x, int y)
 {
 	t_p point;
@@ -8,6 +40,8 @@ int		calculate_distance_piece(t_d *data, int x, int y)
 	int	ret;
 	int	ret_prox;
 
+	if (!data->touched_enemy)
+		return (calculate_distance_top(data, x, y));
 	i = 0;
 	ret = 0;
 	ret_prox = 0;
@@ -31,6 +65,7 @@ int		calculate_distance_piece(t_d *data, int x, int y)
 	// 	return (INT_MIN);
 	return (ret_prox < 0 ? ret_prox : ret);
 }
+
 
 int		calculate_distance(t_p *point, t_p *target) // Calcule la distance entre un point et tous les points ennemis.
 {

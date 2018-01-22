@@ -21,7 +21,7 @@ NAME = jcamhi.filler
 
 CC = gcc
 # CFLAGS =  -Wextra -Wall -g
-CFLAGS =  -Wextra -Wall -g -fsanitize=address
+CFLAGS =  -Wextra -Wall -g
 LFLAGS = -lft -lftprintf
 LIB_DIR=./lib/
 

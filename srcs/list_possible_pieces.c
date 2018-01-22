@@ -7,11 +7,11 @@ t_p	*list_possible_pieces(t_d *data)
 	int	y;
 
 	possibilities = NULL;
-	x = -1 * data->piece_x;
-	while (x < data->size_x)
+	x = data->size_x - 1;
+	while (x >= -1 * data->piece_x)
 	{
-		y = -1 * data->piece_y;
-		while (y < data->size_y)
+		y = data->size_y - 1;
+		while (y >= -1 * data->piece_y)
 		{
 			if (is_possible(data, x, y))
 			{
@@ -19,9 +19,9 @@ t_p	*list_possible_pieces(t_d *data)
 				if (!possibilities)
 					return (NULL);
 			}
-			y++;
+			y--;
 		}
-		x++;
+		x--;
 	}
 	possibilities = insert_sort(possibilities, func);
 	return (possibilities);

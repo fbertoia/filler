@@ -51,6 +51,7 @@ typedef struct	s_d
 	t_vec	direction;
 	int		strategy;
 	int		nbr_tours;
+	int		touched_enemy;
 }				t_d;
 
 typedef struct	s_gen

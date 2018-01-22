@@ -24,6 +24,7 @@ int main(int ac, char **av)
 	data.target.next = NULL;
 	state = state_first_line;
 	data.nbr_tours = 0;
+	data.touched_enemy = 0;
 	while ((get_next_line(0, &s)) > 0)
 	{
 		dprintf(data.log_fd, "%s\n", s);
@@ -61,10 +62,15 @@ int main(int ac, char **av)
 			if (parse_piece(s, &data) <= 0)
 				return (3);
 			if (!put_piece(&data))
+			{
+				delboard(&data);
+				ft_memdel((void**)&s);
+				// while(1);
 				return (4);
+			}
 			data.piece_x = -1;
 			data.piece_y = -1;
-			data.piece = NULL;
+			delpiece(&data);
 			data.first_round = 0;
 			state = state_board;
 			dellist(&(data.enemy_points));
@@ -72,6 +78,5 @@ int main(int ac, char **av)
 		}
 		ft_memdel((void**)&s);
 	}
-	delboard(&data);
 	return (0);
 }
