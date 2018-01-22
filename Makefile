@@ -20,8 +20,7 @@ SRC_PATH = ./srcs/
 NAME = jcamhi.filler
 
 CC = gcc
-# CFLAGS =  -Wextra -Wall -g
-CFLAGS =  -Wextra -Wall -g
+CFLAGS =  -Wextra -Wall -Werror
 LFLAGS = -lft
 LIB_DIR=./lib/
 

@@ -72,7 +72,6 @@ static int		parse_piece_other(t_d *data)
 	line = NULL;
 	while (i < data->piece_x && (k = get_next_line(0, &line)) > 0)
 	{
-		dprintf(data->log_fd, "%s\n", line);
 		if (!ft_fill_piece(data, line, i))
 			return (-3);
 		i++;

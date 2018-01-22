@@ -42,8 +42,6 @@ typedef struct	s_d
 	t_p		*points;
 	t_p		*enemy_points;
 	int		first_round;
-	int		log_fd;
-	int		debug_fd;
 	t_p		enemy_starting_point;
 	t_p		ally_starting_point;
 	t_p		target;

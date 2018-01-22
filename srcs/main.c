@@ -13,8 +13,6 @@ void	init_data(t_d *data, char *av)
 	data->av = av;
 	data->points = NULL;
 	data->enemy_points = NULL;
-	data->log_fd = open("./log", O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	data->debug_fd = open("./debug", O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	data->target.next = NULL;
 	data->nbr_tours = 0;
 	data->touched_enemy = 0;
