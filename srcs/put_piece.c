@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   put_piece.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fbertoia <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/01/30 14:44:41 by fbertoia          #+#    #+#             */
+/*   Updated: 2018/01/30 14:49:26 by fbertoia         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <filler.h>
 
 void	add_piece_to_board(t_d *data, t_p *coords)
@@ -60,8 +72,9 @@ int		touched_piece(t_d *data, t_p *position)
 		{
 			if (data->piece[i][j] == '*')
 			{
-				point.x = position->x + i;
-				point.y = position->y + j;
+				point = data->cheat_mode ? (t_p){NULL, 0, modulo(position->x +
+					i, data->size_x), modulo(position->y + j, data->size_y)}
+					: (t_p){NULL, 0, position->x + i, position->y + j};
 				if (calculate_proximity(&point, data))
 					return (1);
 			}

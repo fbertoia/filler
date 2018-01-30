@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   distance.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fbertoia <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/01/30 14:43:07 by fbertoia          #+#    #+#             */
+/*   Updated: 2018/01/30 14:57:08 by fbertoia         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <filler.h>
 
 int			calculate_distance_top(t_d *data, int x, int y)
@@ -28,6 +40,16 @@ int			calculate_distance_top(t_d *data, int x, int y)
 	return (ret);
 }
 
+static t_p	cheat_mode_coord(t_d *data, int x, int y)
+{
+	t_p ret;
+
+	ret = data->cheat_mode ? (t_p){NULL, 0, modulo(x,
+			data->size_x), modulo(y, data->size_y)}
+				: (t_p){NULL, 0, x, y};
+	return (ret);
+}
+
 int			calculate_distance_piece(t_d *data, int x, int y)
 {
 	t_p point;
@@ -46,7 +68,7 @@ int			calculate_distance_piece(t_d *data, int x, int y)
 		{
 			if (data->piece[i][j] == '*')
 			{
-				point = (t_p){NULL, 0, x + i, y + j};
+				point = cheat_mode_coord(data, x + i, y + j);
 				ret_prox += calculate_proximity(&point, data);
 				ret += calculate_distance(&point, data->enemy_points);
 			}

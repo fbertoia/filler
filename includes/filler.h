@@ -1,9 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   filler.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fbertoia <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/01/30 15:08:36 by fbertoia          #+#    #+#             */
+/*   Updated: 2018/01/30 15:08:39 by fbertoia         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef FILLER_H
 # define FILLER_H
 
 # include <libft.h>
 # include <stdio.h>
 # include <limits.h>
+# include <stdlib.h>
 
 enum			e_flag
 {
@@ -12,9 +25,9 @@ enum			e_flag
 	state_piece
 };
 
-typedef struct	s_p
+typedef struct	s_fi
 {
-	struct s_p	*next;
+	struct s_fi	*next;
 	int			distance;
 	int			x;
 	int			y;
@@ -48,6 +61,7 @@ typedef struct	s_d
 	int		strategy;
 	int		nbr_tours;
 	int		touched_enemy;
+	int		cheat_mode;
 }				t_d;
 
 typedef struct	s_gen
@@ -100,4 +114,5 @@ int				parse_2(t_d *data);
 int				parse_board_line(char *line, t_d *data);
 int				parse_board_other(t_d *data);
 
+int				modulo(int a, int mod);
 #endif

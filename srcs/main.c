@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fbertoia <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/01/30 14:43:38 by fbertoia          #+#    #+#             */
+/*   Updated: 2018/01/30 14:43:40 by fbertoia         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <filler.h>
 #include <unistd.h>
 
@@ -16,6 +28,7 @@ void	init_data(t_d *data, char *av)
 	data->target.next = NULL;
 	data->nbr_tours = 0;
 	data->touched_enemy = 0;
+	data->cheat_mode = 1;
 }
 
 int		state_fl(t_d *data, int *state, char *s)
