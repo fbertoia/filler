@@ -30,7 +30,9 @@ int			calculate_distance_top(t_d *data, int x, int y)
 		{
 			if (data->piece[i][j] == '*')
 			{
-				point = (t_p){NULL, 0, x + i, y + j};
+				point = data->cheat_mode ? (t_p){NULL, 0, modulo(x +
+					i, data->size_x), modulo(y + j, data->size_y)}
+					: (t_p){NULL, 0, x + i, y + j};;
 				ret += calculate_distance(&point, &top);
 			}
 			j++;
@@ -40,7 +42,7 @@ int			calculate_distance_top(t_d *data, int x, int y)
 	return (ret);
 }
 
-static t_p	cheat_mode_coord(t_d *data, int x, int y)
+t_p			cheat_mode_coord(t_d *data, int x, int y)
 {
 	t_p ret;
 

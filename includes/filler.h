@@ -115,4 +115,5 @@ int				parse_board_line(char *line, t_d *data);
 int				parse_board_other(t_d *data);
 
 int				modulo(int a, int mod);
+t_p				cheat_mode_coord(t_d *data, int x, int y);
 #endif

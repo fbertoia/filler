@@ -24,7 +24,10 @@ void	add_piece_to_board(t_d *data, t_p *coords)
 		while (j < data->piece_y)
 		{
 			if (data->piece[i][j] == '*')
-				add_new_point(&(data->points), coords->x + i, coords->y + j);
+				add_new_point(&(data->points), data->cheat_mode ?
+				modulo(coords->x + i, data->size_x) : coords->x + i,
+				data->cheat_mode ? modulo(coords->y + i, data->size_y)
+				: coords->y + j);
 			j++;
 		}
 		i++;
