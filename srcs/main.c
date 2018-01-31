@@ -75,6 +75,14 @@ int		state_b(t_d *data, char *s, int *state)
 	return (1);
 }
 
+int		free_mem(char **str, int a)
+{
+	(void)str;
+	ft_memdel((void**)str);
+	while (1);
+	return (a);
+}
+
 int		main(int ac, char **av)
 {
 	char	*s;
@@ -89,12 +97,12 @@ int		main(int ac, char **av)
 		if (state == state_first_line)
 		{
 			if (!state_fl(&data, &state, s))
-				return (1);
+				return (free_mem(&s, 1));
 		}
 		else if (state == state_board)
 		{
 			if (((state = state_piece) || 1) && parse_board(s, &data) <= 0)
-				return (2);
+				return (free_mem(&s, 2));
 		}
 		else if (state == state_piece)
 			if (!state_b(&data, s, &state))
