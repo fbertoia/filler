@@ -12,16 +12,14 @@
 
 #include <filler.h>
 
-int			calculate_distance_top(t_d *data, int x, int y)
+int			calculate_distance_top(t_d *data, int x, int y, int i)
 {
 	t_p point;
-	int	i;
 	int	j;
 	int	ret;
 	t_p	top;
 
 	top = (t_p){NULL, 0, 0, data->ally_starting_point.y};
-	i = 0;
 	ret = 0;
 	while (i < data->piece_x)
 	{
@@ -32,7 +30,7 @@ int			calculate_distance_top(t_d *data, int x, int y)
 			{
 				point = data->cheat_mode ? (t_p){NULL, 0, modulo(x +
 					i, data->size_x), modulo(y + j, data->size_y)}
-					: (t_p){NULL, 0, x + i, y + j};;
+					: (t_p){NULL, 0, x + i, y + j};
 				ret += calculate_distance(&point, &top);
 			}
 			j++;
@@ -61,7 +59,7 @@ int			calculate_distance_piece(t_d *data, int x, int y)
 	int	ret_prox;
 
 	if (!(i = 0) && !data->touched_enemy)
-		return (calculate_distance_top(data, x, y));
+		return (calculate_distance_top(data, x, y, 0));
 	ret = 0;
 	ret_prox = 0;
 	while (i < data->piece_x && !(j = 0))
