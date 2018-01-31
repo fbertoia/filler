@@ -39,6 +39,7 @@ $(NAME): $(OBJS_LIBFT)
 	@ar rsc $(NAME) $(OBJS_LIBFT) $(OBJS_PRINTF)
 
 $(DIR_LIBFT)/obj/%.o: $(DIR_LIBFT)/%.c
+	@mkdir -p libft/obj 2> /dev/null
 	$(CC) -o $@ -c $(CFLAGS) $?
 
 clean:
