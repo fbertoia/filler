@@ -77,9 +77,7 @@ int		state_b(t_d *data, char *s, int *state)
 
 int		free_mem(char **str, int a)
 {
-	(void)str;
 	ft_memdel((void**)str);
-	while (1);
 	return (a);
 }
 
